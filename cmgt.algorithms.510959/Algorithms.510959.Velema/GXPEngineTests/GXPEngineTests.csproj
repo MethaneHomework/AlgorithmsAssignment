@@ -64,9 +64,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GXPEngine\GXPEngine.csproj">
+    <ProjectReference Include="..\GXPEngine\AlgoAssignment.csproj">
       <Project>{B5126D4C-7FE0-4552-BC8C-E68D529C22B2}</Project>
-      <Name>GXPEngine</Name>
+      <Name>AlgoAssignment</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
