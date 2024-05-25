@@ -1,3 +1,4 @@
+using GXPEngine;
 using GXPEngine.Control;
 using GXPEngine.OpenGL;
 using System.Drawing;
@@ -26,8 +27,8 @@ class AlgorithmsAssignment : Scene
 	PathFinder _pathFinder = null;
 
 	//common settings
-	private const int SCALE = 20;               //TODO: experiment with changing this
-	private const int MIN_ROOM_SIZE = 7;        //TODO: use this setting in your dungeon generator
+	private const int SCALE = 10;               // TODO: experiment with changing this
+	private const int MIN_ROOM_SIZE = 7;        // TODO: use this setting in your dungeon generator
 
 	public AlgorithmsAssignment()
 	{
@@ -112,7 +113,7 @@ class AlgorithmsAssignment : Scene
 		// TODO: Study the SampleDungeonNodeGraph class and try it out below
 		// TODO: Comment out the SampleDungeonNodeGraph again, implement a HighLevelDungeonNodeGraph class and uncomment it below
 
-		//_graph = new SampleDungeonNodeGraph(_dungeon);
+		_graph = new SampleDungeonNodeGraph(_dungeon);
 		//_graph = new HighLevelDungeonNodeGraph(_dungeon);
 		//_graph = new LowLevelDungeonNodeGraph(_dungeon);
 
@@ -199,8 +200,17 @@ class AlgorithmsAssignment : Scene
 		if (_agent != null) AddChild(_agent);                       //and last but not least the agent itself
 
 		/////////////////////////////////////////////////
-		//The end!
+		// The end!
 		////
+	}
+
+	public void Update()
+	{
+		if (Input.GetKeyDown(Key.R))
+		{
+			_dungeon.Generate(MIN_ROOM_SIZE);
+			_graph.Generate();
+		}
 	}
 }
 

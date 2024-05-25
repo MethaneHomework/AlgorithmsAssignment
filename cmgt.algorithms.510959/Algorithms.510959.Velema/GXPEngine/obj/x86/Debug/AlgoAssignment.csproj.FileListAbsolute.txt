@@ -1,7 +1,0 @@
-C:\Users\T-Vel\Documents\School files\Algorithms\cmgt.algorithms.510959\Algorithms.510959.Velema\GXPEngine\bin\Debug\GXPEngine.exe.config
-C:\Users\T-Vel\Documents\School files\Algorithms\cmgt.algorithms.510959\Algorithms.510959.Velema\GXPEngine\bin\Debug\GXPEngine.exe
-C:\Users\T-Vel\Documents\School files\Algorithms\cmgt.algorithms.510959\Algorithms.510959.Velema\GXPEngine\bin\Debug\GXPEngine.pdb
-C:\Users\T-Vel\Documents\School files\Algorithms\cmgt.algorithms.510959\Algorithms.510959.Velema\GXPEngine\obj\x86\Debug\AlgoAssignment.csproj.AssemblyReference.cache
-C:\Users\T-Vel\Documents\School files\Algorithms\cmgt.algorithms.510959\Algorithms.510959.Velema\GXPEngine\obj\x86\Debug\AlgoAssignment.csproj.CoreCompileInputs.cache
-C:\Users\T-Vel\Documents\School files\Algorithms\cmgt.algorithms.510959\Algorithms.510959.Velema\GXPEngine\obj\x86\Debug\GXPEngine.exe
-C:\Users\T-Vel\Documents\School files\Algorithms\cmgt.algorithms.510959\Algorithms.510959.Velema\GXPEngine\obj\x86\Debug\GXPEngine.pdb

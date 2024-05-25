@@ -36,7 +36,9 @@ namespace GXPEngine.Physics
 		}
 		private float _angle;
 
+#pragma warning disable CS0649 // Field 'ACollider.IsColliding' is never assigned to, and will always have its default value false
 		public bool IsColliding;
+#pragma warning restore CS0649 // Field 'ACollider.IsColliding' is never assigned to, and will always have its default value false
 		public CollisionInfo LastCollision
 		{
 			get => _lastCol;
@@ -47,7 +49,9 @@ namespace GXPEngine.Physics
 			}
 		}
 		private CollisionInfo _lastCol;
+#pragma warning disable CS0649 // Field 'ACollider.OnCollision' is never assigned to, and will always have its default value null
 		public EventHandler<(ACollider col, ACollider other)> OnCollision;
+#pragma warning restore CS0649 // Field 'ACollider.OnCollision' is never assigned to, and will always have its default value null
 
 		public ColliderType Behavior
 		{

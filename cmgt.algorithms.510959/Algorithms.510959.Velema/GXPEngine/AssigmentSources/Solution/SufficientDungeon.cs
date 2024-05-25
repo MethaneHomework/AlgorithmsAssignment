@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 internal class SufficientDungeon : Dungeon
 {
-	private const int seed = 2;
-	private Random rnd;
+	protected Random rnd;
+	protected bool[,] walkableGrid;
+	protected Area RootArea;
 
 	public SufficientDungeon(Size pSize) : base(pSize) { }
 
@@ -12,107 +14,79 @@ internal class SufficientDungeon : Dungeon
 	{
 		rnd = new Random();
 
-		Rectangle main = new Rectangle(1, 1, size.Width - 2, size.Height - 2);
-		Rectangle a;
-		Rectangle b;
+		walkableGrid = new bool[size.Width, size.Height];
 
-		(a, b) = SplitRectangle(main, rnd);
+		RootArea = new Area(new Rectangle(0, 0, size.Width, size.Height));
+		RootArea.Split(pMinimumRoomSize + 2, 2, new Random());
 
-		rooms.Add(new Room(a));
-		rooms.Add(new Room(b));
-
-		// Picture of assignment 1.1 clearly shows a BSP generated dungeon
-		//
-		// Create a rectangle that is the size of the dungeon
-		// Pick a random axis (x or y)
-		// Pick a random number that lies along the axis and fits in the rectangle
-		// Create two new rectangles, one using the chosen point as it's limit and the other using that point + 1
-		// Repeat for every rectangle until you have enough rooms
-
-
+		PlaceRooms(RootArea);
+		PlaceDoors(RootArea);
 	}
 
-	private (Rectangle a, Rectangle b) SplitRectangle(Rectangle rect, Random rnd)
+	protected virtual void PlaceRooms(Area rootArea)
 	{
-		// Pick random axis
-		int axisPick = rnd.Next() % 2;
-
-		Rectangle rectA = new Rectangle();
-		Rectangle rectB = new Rectangle();
-
-		if (axisPick == 0)
+		foreach (Area leaf in rootArea.Leaves)
 		{
-			// Split horizontally
-			rectA.Location = rect.Location;
-			rectA.Height = rect.Height;
-			rectB.Location = rect.Location;
-			rectB.Height = rect.Height;
-
-			int splitValue = rnd.Next(rect.Width);
-			rectA.Width = splitValue;
-			rectB.X += splitValue + 1;
-			rectB.Width = rect.Width - splitValue - 1;
+			Size roomSize = new Size(leaf.Width, leaf.Height);
+			Point roomPosition = new Point(leaf.X, leaf.Y);
+			AddRoom(new Room(new Rectangle(roomPosition, roomSize)));
 		}
-		else
-		{
-			// Split vertically
-			rectA.Location = rect.Location;
-			rectA.Width = rect.Width;
-			rectB.Location = rect.Location;
-			rectB.Width = rect.Width;
-
-			int splitValue = rnd.Next(rect.Height);
-			rectA.Height = splitValue;
-			rectB.Y += splitValue + 1;
-			rectB.Height = rect.Width - splitValue - 1;
-		}
-
-		return (rectA, rectB);
 	}
-}
-
-internal class RectangleBSPNode
-{
-	public Rectangle Self;
-	public RectangleBSPNode ChildA;
-	public RectangleBSPNode ChildB;
-
-	public RectangleBSPNode(Rectangle rect, Random rnd)
+	protected virtual void PlaceDoors(Area rootArea)
 	{
-		Self = rect;
-
-		// Pick random axis
-		int axisPick = rnd.Next() % 2;
-
-		Rectangle leafA = new Rectangle();
-		Rectangle leafB = new Rectangle();
-
-		if (axisPick == 0)
+		foreach ((Area a, Area b) in rootArea.Pairs)
 		{
-			// Split horizontally
-			leafA.Location = Self.Location;
-			leafA.Height = Self.Height;
-			leafB.Location = Self.Location;
-			leafB.Height = Self.Height;
+			bool doorValid = false;
+			int doorX = 0;
+			int doorY = 0;
 
-			int splitValue = rnd.Next(Self.Width);
-			leafA.Width = splitValue;
-			leafB.X += splitValue + 1;
-			leafB.Width = Self.Width - splitValue - 1;
+			while (!doorValid)
+			{
+				if (a.X == b.X)
+				{
+					// Areas are aligned like this
+					// A
+					// |
+					// B
+					ref Rectangle rectA = ref a.Rectangle; // No need to copy values
+					doorX = rnd.Next(rectA.Left + 1, rectA.Right - 1);
+					doorY = a.Rectangle.Bottom - 1;
+
+					doorValid = walkableGrid[doorX, doorY + 1] && walkableGrid[doorX, doorY - 1];
+				}
+				else
+				{
+					// Areas are aligned like this
+					//
+					// A - B
+					//
+					ref Rectangle rectA = ref a.Rectangle; // No need to copy values
+					doorX = a.Rectangle.Right - 1;
+					doorY = rnd.Next(rectA.Top + 1, rectA.Bottom - 1);
+
+					doorValid = walkableGrid[doorX + 1, doorY] && walkableGrid[doorX - 1, doorY];
+				}
+			}
+
+			AddDoor(new Door(new Point(doorX, doorY)));
 		}
-		else
-		{
-			// Split vertically
-			leafA.Location = Self.Location;
-			leafA.Width = Self.Width;
-			leafB.Location = Self.Location;
-			leafB.Width = Self.Width;
+	}
 
-			int splitValue = rnd.Next(Self.Height);
-			leafA.Height = splitValue;
-			leafB.Y += splitValue + 1;
-			leafB.Height = Self.Width - splitValue - 1;
+	private void AddDoor(Door door)
+	{
+		doors.Add(door);
+		walkableGrid[door.location.X, door.location.Y] = true;
+	}
+	private void AddRoom(Room room)
+	{
+		rooms.Add(room);
+
+		for (int y = 0; y < room.area.Height - 2; y++)
+		{
+			for (int x = 0; x < room.area.Width - 2; x++)
+			{
+				walkableGrid[x + room.area.X + 1, y + room.area.Y + 1] = true;
+			}
 		}
 	}
 }
-

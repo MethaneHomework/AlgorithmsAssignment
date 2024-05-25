@@ -8,9 +8,11 @@ internal class ContainerGame : Game
 	private bool showfps;
 	private readonly EasyDraw fpsCounter;
 
+	private AlgorithmsAssignment algoScene;
+
 	public float SoundVolume = 0.05f;
 
-	public ContainerGame() : base(800, 600, false, true, -1, -1, false)
+	public ContainerGame() : base(1200, 900, false, true, -1, -1, false)
 	{
 		// Configure FPS
 		TargetFps = int.MaxValue;
@@ -20,8 +22,8 @@ internal class ContainerGame : Game
 		fpsCounter.TextAlign(CenterMode.Min, CenterMode.Min);
 		AddChild(fpsCounter);
 
-		AlgorithmsAssignment aa = new AlgorithmsAssignment();
-		aa.Load();
+		algoScene = new AlgorithmsAssignment();
+		algoScene.Load();
 
 		Console.WriteLine("MyGame initialized");
 	}
@@ -45,9 +47,8 @@ internal class ContainerGame : Game
 			showfps = !showfps;
 			fpsCounter.visible = showfps;
 		}
-
-		if (Input.GetKeyDown(Key.R)) new AlgorithmsAssignment().Load();
 	}
+
 	static void Main()
 	{
 		new ContainerGame().Start();

@@ -45,6 +45,7 @@
     <Folder Include="Engine\Control\Scenes\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssigmentSources\Solution\Area.cs" />
     <Compile Include="AssigmentSources\Solution\SufficientDungeon.cs" />
     <Compile Include="Engine\Assets\Assets.cs" />
     <Compile Include="Engine\Control\Scene.cs" />
@@ -121,6 +122,7 @@
     <Compile Include="AssigmentSources\Util\NodeLabelDrawer.cs" />
     <Compile Include="AssigmentSources\Util\RectangleExtensions.cs" />
     <Compile Include="AssigmentSources\Util\Vec2.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.editorconfig">
