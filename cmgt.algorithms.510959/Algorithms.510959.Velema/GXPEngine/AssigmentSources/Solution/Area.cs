@@ -1,10 +1,17 @@
-﻿using System;
+﻿using GXPEngine;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 
 internal class Area
 {
 	public Rectangle Rectangle;
+	public readonly int ID;
+	private static int lastID = 0;
+
+	// Simplicity accessors
 	public Size Size => Rectangle.Size;
 	public Point Location => Rectangle.Location;
 
@@ -19,6 +26,8 @@ internal class Area
 		Parent = parent;
 		ChildA = childA;
 		ChildB = childB;
+
+		ID = lastID++;
 	}
 
 	// Parent area that contains this area
@@ -73,10 +82,13 @@ internal class Area
 			return pairs;
 		}
 	}
+	public bool HasChildren => ChildA != null && ChildB != null;
 
 	// =================================================
 	//		Methods
 	// =================================================
+
+	// Splits the area preserving minimum size
 	public void Split(int minSize, int maxDepth, Random rng, int depth = 0)
 	{
 		SplitMode splitMode;
@@ -127,18 +139,94 @@ internal class Area
 		}
 	}
 
-	// Enum for better readability of splitcode
-	protected enum SplitMode
-	{
-		vertical,
-		horizontal,
-	}
-
 	// Checks if an area is big enough to be split in either direction
 	protected (bool horizontal, bool vertical) CanSplit(int minSize)
 	{
 		minSize = 2 * minSize + 1;
 		return (Size.Width > minSize, Size.Height > minSize);
+	}
+
+	public Area FindByPoint(Point point)
+	{
+		Area containedInA = null;
+		Area containedInB = null;
+
+		if (ChildA != null && ChildA.Contains(point))
+		{
+			if (ChildA.HasChildren) containedInA = ChildA.FindByPoint(point);
+			else return ChildA;
+		}
+		if (ChildB != null && ChildB.Contains(point))
+		{
+			if (ChildB.HasChildren) containedInB = ChildB.FindByPoint(point);
+			else return ChildB;
+		}
+
+		if (containedInA != null && containedInB != null)
+		{
+			if (Debugger.IsAttached) 
+			{
+				Debugger.Break();
+				return containedInA;
+			}
+			else throw new Exception("Door connects to too many areas");
+		}
+		else if (containedInA != null) return containedInA;
+		else if (containedInB != null) return containedInB;
+		else return null;
+	}
+	public bool Contains(Point point) =>
+		point.X >= Rectangle.Left &&
+		point.X <= Rectangle.Right - 1 &&
+		point.Y >= Rectangle.Top &&
+		point.Y <= Rectangle.Bottom - 1;
+
+	public override string ToString()
+	{
+		return $"Area {ID}, {Rectangle}";
+	}
+	public string TreeToString()
+	{
+		string result = string.Empty;
+		if (HasChildren)
+		{
+			string stringA = ChildA.TreeToString();
+			string[] stringsA = stringA.Split('\n');
+
+			stringA = "\u251C " + stringsA[0] + '\n';
+			for (int i = 1; i < stringsA.Length; i++)
+			{
+				string str = stringsA[i];
+				str = "\u2502 " + str + '\n';
+				stringA += str;
+			}
+			stringA.TrimEnd();
+
+			string stringB = ChildB.TreeToString();
+			string[] stringsB = stringB.Split('\n');
+
+			stringB = "\u2514 " + stringsB[0] + '\n';
+			for (int i = 1; i < stringsB.Length; i++)
+			{
+				string str = stringsB[i];
+				str = "  " + str + '\n';
+				stringB += str;
+			}
+			stringB.TrimEnd();
+
+			return $"Area {ID}\n" + $"{stringA}" + $"{stringB}".TrimEnd() + "\n";
+		}
+		else
+		{
+			return ToString();
+		}
+	}
+
+	// Enum for better readability of splitcode
+	protected enum SplitMode
+	{
+		vertical,
+		horizontal,
 	}
 }
 

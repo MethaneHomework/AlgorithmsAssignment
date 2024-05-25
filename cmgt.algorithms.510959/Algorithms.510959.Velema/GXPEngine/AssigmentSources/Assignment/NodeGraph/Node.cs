@@ -39,7 +39,8 @@ class Node
 
 	public override string ToString()
 	{
-		return id;
+		return
+			$"Node #{id}";
 	}
 }
 

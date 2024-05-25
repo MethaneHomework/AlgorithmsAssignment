@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="AssigmentSources\Solution\Area.cs" />
     <Compile Include="AssigmentSources\Solution\SufficientDungeon.cs" />
+    <Compile Include="AssigmentSources\Solution\SufficientNodeGraph.cs" />
     <Compile Include="Engine\Assets\Assets.cs" />
     <Compile Include="Engine\Control\Scene.cs" />
     <Compile Include="Engine\Core\AddOns\Settings.cs" />

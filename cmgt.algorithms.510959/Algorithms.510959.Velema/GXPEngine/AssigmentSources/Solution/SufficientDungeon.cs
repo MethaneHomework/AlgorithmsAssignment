@@ -7,38 +7,50 @@ internal class SufficientDungeon : Dungeon
 	protected Random rnd;
 	protected bool[,] walkableGrid;
 	protected Area RootArea;
+	protected Dictionary<int, Room> roomMap;
+
+	protected int minRoomSize;
 
 	public SufficientDungeon(Size pSize) : base(pSize) { }
 
 	protected override void generate(int pMinimumRoomSize)
 	{
 		rnd = new Random();
+		minRoomSize = pMinimumRoomSize;
 
 		walkableGrid = new bool[size.Width, size.Height];
 
 		RootArea = new Area(new Rectangle(0, 0, size.Width, size.Height));
-		RootArea.Split(pMinimumRoomSize + 2, 2, new Random());
+		RootArea.Split(pMinimumRoomSize + 2, 10, new Random());
+		Console.WriteLine(RootArea.TreeToString());
 
 		PlaceRooms(RootArea);
 		PlaceDoors(RootArea);
+
+		Console.WriteLine();
 	}
 
 	protected virtual void PlaceRooms(Area rootArea)
 	{
+		roomMap = new Dictionary<int, Room>();
 		foreach (Area leaf in rootArea.Leaves)
 		{
 			Size roomSize = new Size(leaf.Width, leaf.Height);
 			Point roomPosition = new Point(leaf.X, leaf.Y);
-			AddRoom(new Room(new Rectangle(roomPosition, roomSize)));
+			Room room = new Room(new Rectangle(roomPosition, roomSize));
+			AddRoom(room, leaf.ID);
 		}
 	}
 	protected virtual void PlaceDoors(Area rootArea)
 	{
+		Console.WriteLine("Generating doors...");
+
 		foreach ((Area a, Area b) in rootArea.Pairs)
 		{
 			bool doorValid = false;
 			int doorX = 0;
 			int doorY = 0;
+			bool doorHorizontal = false;
 
 			while (!doorValid)
 			{
@@ -48,6 +60,9 @@ internal class SufficientDungeon : Dungeon
 					// A
 					// |
 					// B
+
+					doorHorizontal = false;
+
 					ref Rectangle rectA = ref a.Rectangle; // No need to copy values
 					doorX = rnd.Next(rectA.Left + 1, rectA.Right - 1);
 					doorY = a.Rectangle.Bottom - 1;
@@ -60,6 +75,9 @@ internal class SufficientDungeon : Dungeon
 					//
 					// A - B
 					//
+
+					doorHorizontal = true;
+
 					ref Rectangle rectA = ref a.Rectangle; // No need to copy values
 					doorX = a.Rectangle.Right - 1;
 					doorY = rnd.Next(rectA.Top + 1, rectA.Bottom - 1);
@@ -68,8 +86,39 @@ internal class SufficientDungeon : Dungeon
 				}
 			}
 
-			AddDoor(new Door(new Point(doorX, doorY)));
+			Area sideA;
+			Area sideB;
+
+			if (doorHorizontal)
+			{
+				sideA = rootArea.FindByPoint(new Point(doorX - minRoomSize / 2, doorY));
+				sideB = rootArea.FindByPoint(new Point(doorX + minRoomSize / 2, doorY));
+			}
+			else
+			{
+				sideA = rootArea.FindByPoint(new Point(doorX, doorY - minRoomSize / 2));
+				sideB = rootArea.FindByPoint(new Point(doorX, doorY + minRoomSize / 2));
+			}
+
+			Room roomA = roomMap[sideA.ID];
+			Room roomB = roomMap[sideB.ID];
+
+			Door door = new Door(new Point(doorX, doorY))
+			{
+				horizontal = doorHorizontal,
+				roomA = roomA,
+				roomB = roomB
+			};
+
+			// Add door to rooms and doors
+			roomA.doors.Add(door);
+			roomB.doors.Add(door);
+			AddDoor(door);
+
+			Console.WriteLine(door);
 		}
+
+		Console.WriteLine("Doors generated");
 	}
 
 	private void AddDoor(Door door)
@@ -77,9 +126,11 @@ internal class SufficientDungeon : Dungeon
 		doors.Add(door);
 		walkableGrid[door.location.X, door.location.Y] = true;
 	}
-	private void AddRoom(Room room)
+	private void AddRoom(Room room, int areaID)
 	{
 		rooms.Add(room);
+		roomMap.Add(areaID, room);
+		Console.WriteLine("Added room #{0} to dictionary under ({1})", room.ID, areaID);
 
 		for (int y = 0; y < room.area.Height - 2; y++)
 		{

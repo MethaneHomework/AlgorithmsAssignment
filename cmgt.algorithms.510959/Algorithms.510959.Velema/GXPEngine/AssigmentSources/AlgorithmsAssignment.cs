@@ -1,4 +1,5 @@
 using GXPEngine;
+using GXPEngine.AssigmentSources.Solution;
 using GXPEngine.Control;
 using GXPEngine.OpenGL;
 using System.Drawing;
@@ -27,7 +28,7 @@ class AlgorithmsAssignment : Scene
 	PathFinder _pathFinder = null;
 
 	//common settings
-	private const int SCALE = 10;               // TODO: experiment with changing this
+	private const int SCALE = 5;               // TODO: experiment with changing this
 	private const int MIN_ROOM_SIZE = 7;        // TODO: use this setting in your dungeon generator
 
 	public AlgorithmsAssignment()
@@ -68,10 +69,10 @@ class AlgorithmsAssignment : Scene
 		////////////////////////////////////////
 		// Assignment 1.1 Sufficient (Mandatory)
 		// 
-		// TODO: Study assignment 1.1 on blackboard
-		// TODO: Study the Dungeon, Room and Door classes
-		// TODO: Study the SampleDungeon class and try it out below
-		// TODO: Comment out SampleDungeon below, implement a SufficientDungeon class and uncomment it below
+		// Done: Study assignment 1.1 on blackboard
+		// Done: Study the Dungeon, Room and Door classes
+		// Done: Study the SampleDungeon class and try it out below
+		// Done: Comment out SampleDungeon below, implement a SufficientDungeon class and uncomment it below
 
 		//_dungeon = new SampleDungeon(size);
 		_dungeon = new SufficientDungeon(size);
@@ -113,7 +114,8 @@ class AlgorithmsAssignment : Scene
 		// TODO: Study the SampleDungeonNodeGraph class and try it out below
 		// TODO: Comment out the SampleDungeonNodeGraph again, implement a HighLevelDungeonNodeGraph class and uncomment it below
 
-		_graph = new SampleDungeonNodeGraph(_dungeon);
+		//_graph = new SampleDungeonNodeGraph(_dungeon);
+		_graph = new SufficientNodeGraph(_dungeon);
 		//_graph = new HighLevelDungeonNodeGraph(_dungeon);
 		//_graph = new LowLevelDungeonNodeGraph(_dungeon);
 
@@ -210,6 +212,10 @@ class AlgorithmsAssignment : Scene
 		{
 			_dungeon.Generate(MIN_ROOM_SIZE);
 			_graph.Generate();
+
+			NodeLabelDrawer[] nld = FindObjectsOfType<NodeLabelDrawer>();
+			RemoveChild(nld[0]);
+			AddChild(new NodeLabelDrawer(_graph));
 		}
 	}
 }
