@@ -134,7 +134,7 @@ class AlgorithmsAssignment : Scene
 		// TODO: Study the SampleNodeGraphAgent class and try it out below
 		// TODO: Comment out the SampleNodeGraphAgent again, implement an OnGraphWayPointAgent class and uncomment it below
 
-		//_agent = new SampleNodeGraphAgent(_graph);
+		_agent = new SampleNodeGraphAgent(_graph);
 		//_agent = new OnGraphWayPointAgent(_graph);
 
 		////////////////////////////////////////////////////////////
@@ -212,14 +212,13 @@ class AlgorithmsAssignment : Scene
 		////
 		///
 		sw = new Stopwatch();
-		sw.Start();
 	}
 
 
 	public static int seed = 0;
 	public void Update()
 	{
-		if (sw.ElapsedMilliseconds > 500)
+		if (sw.ElapsedMilliseconds > 1000)
 		{
 			seed++;
 			sw.Restart();
@@ -253,9 +252,18 @@ class AlgorithmsAssignment : Scene
 		_dungeon.Generate(MIN_ROOM_SIZE);
 		_graph.Generate();
 
-		NodeLabelDrawer[] nld = FindObjectsOfType<NodeLabelDrawer>();
-		RemoveChild(nld[0]);
+		NodeLabelDrawer nld = FindObjectOfType<NodeLabelDrawer>();
+		RemoveChild(nld);
 		AddChild(new NodeLabelDrawer(_graph));
+
+		NodeGraphAgent currentAgent = FindObjectOfType<NodeGraphAgent>();
+		RemoveChild(currentAgent);
+		Type typeOfAgent = _agent.GetType();
+		NodeGraphAgent agent = (NodeGraphAgent)(Activator.CreateInstance(typeOfAgent, _graph));
+		_agent = agent;
+		AddChild(agent);
+
+		Console.WriteLine("Generated dungeon using seed {0}", seed);
 	}
 }
 
