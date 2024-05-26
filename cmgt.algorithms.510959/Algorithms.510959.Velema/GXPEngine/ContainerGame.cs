@@ -25,7 +25,7 @@ internal class ContainerGame : Game
 		algoScene = new AlgorithmsAssignment();
 		algoScene.Load();
 
-		Console.WriteLine("MyGame initialized");
+		//Console.WriteLine("MyGame initialized");
 	}
 
 	private void Update()

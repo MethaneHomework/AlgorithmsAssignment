@@ -45,9 +45,10 @@
     <Folder Include="Engine\Control\Scenes\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssigmentSources\Solution\Area.cs" />
-    <Compile Include="AssigmentSources\Solution\SufficientDungeon.cs" />
-    <Compile Include="AssigmentSources\Solution\SufficientNodeGraph.cs" />
+    <Compile Include="AssigmentSources\Solution\Dungeon\GoodDungeon.cs" />
+    <Compile Include="AssigmentSources\Solution\Util\BSPNode.cs" />
+    <Compile Include="AssigmentSources\Solution\Dungeon\SufficientDungeon.cs" />
+    <Compile Include="AssigmentSources\Solution\NodeGraph\SufficientNodeGraph.cs" />
     <Compile Include="Engine\Assets\Assets.cs" />
     <Compile Include="Engine\Control\Scene.cs" />
     <Compile Include="Engine\Core\AddOns\Settings.cs" />

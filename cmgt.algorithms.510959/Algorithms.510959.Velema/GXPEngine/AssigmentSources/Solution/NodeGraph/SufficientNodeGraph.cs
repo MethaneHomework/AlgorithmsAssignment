@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GXPEngine.AssigmentSources.Solution
 {
 	internal class SufficientNodeGraph : NodeGraph
 	{
-		Dungeon dungeon;
+		private readonly Dungeon dungeon;
 
 		public SufficientNodeGraph(Dungeon pDungeon) : base((int)(pDungeon.size.Width * pDungeon.scale), (int)(pDungeon.size.Height * pDungeon.scale), (int)pDungeon.scale / 3)
 		{
@@ -17,14 +15,22 @@ namespace GXPEngine.AssigmentSources.Solution
 
 			OnNodeLeftClicked = (node) =>
 			{
-				Console.WriteLine(node + " connects to:");
-				for (int i = 0; i < node.connections.Count - 1; i++)
+				if (node.connections.Count > 0)
 				{
-					Node n = node.connections[i];
-					Console.WriteLine("\u251C {0}", n);
+					Debug.WriteLineIf(SufficientDungeon.informativeOutput.Enabled, 
+						node + " connects to:");
+					for (int i = 0; i < node.connections.Count - 1; i++)
+					{
+						Node n = node.connections[i];
+						Debug.WriteLineIf(SufficientDungeon.informativeOutput.Enabled,
+							$"\u251C{n}");
+					}
+					Debug.WriteLineIf(SufficientDungeon.informativeOutput.Enabled, $"\u2514{node.connections[node.connections.Count - 1]}");
 				}
-				Console.WriteLine("\u2517 {0}", node.connections[node.connections.Count - 1]);
-
+				else
+				{
+					Debug.WriteLineIf(SufficientDungeon.informativeOutput.Enabled, node + " has no connections.");
+				}
 			};
 		}
 
@@ -45,11 +51,11 @@ namespace GXPEngine.AssigmentSources.Solution
 			}
 			foreach (Door door in dungeon.doors)
 			{
-				Point point = new Point( 
-					(int)( (door.location.X + 0.5f) * dungeon.scale ), 
-					(int)( (door.location.Y + 0.5f) * dungeon.scale )
-				);
-				Node doorNode = new Node(point);
+				//Point point = new Point( 
+				//	(int)( (door.location.X + 0.5f) * dungeon.scale ),
+				//	(int)( (door.location.Y + 0.5f) * dungeon.scale )
+				//);
+				Node doorNode = new Node(door, dungeon.scale);
 
 				Node roomA = roomNodes[door.roomA.ID];
 				roomA.connections.Add(doorNode);

@@ -1,6 +1,7 @@
 ﻿using GXPEngine;
 using GXPEngine.OpenGL;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 
 /**
@@ -50,7 +51,8 @@ abstract class Dungeon : Canvas
 		_texture.Unbind();
 		/**/
 
-		System.Console.WriteLine(this.GetType().Name + " created.");
+		Debug.WriteLineIf(SufficientDungeon.informativeOutput.Enabled,
+			this.GetType().Name + " created.");
 	}
 
 	/**
@@ -61,14 +63,16 @@ abstract class Dungeon : Canvas
 	 */
 	public void Generate(int pMinimumRoomSize)
 	{
-		System.Console.WriteLine(this.GetType().Name + ".Generate:Generating dungeon...");
+		Debug.WriteLineIf(SufficientDungeon.informativeOutput.Enabled,
+			this.GetType().Name + ".Generate:Generating dungeon...");
 
 		rooms.Clear();
 		doors.Clear();
 
 		generate(pMinimumRoomSize);
 
-		System.Console.WriteLine(this.GetType().Name + ".Generate:Dungeon generated.");
+		Debug.WriteLineIf(SufficientDungeon.informativeOutput.Enabled, 
+			this.GetType().Name + ".Generate:Dungeon generated.");
 
 		if (autoDrawAfterGenerate) draw();
 	}

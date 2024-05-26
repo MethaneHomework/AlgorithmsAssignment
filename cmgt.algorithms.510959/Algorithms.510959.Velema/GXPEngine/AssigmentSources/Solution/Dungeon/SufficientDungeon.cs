@@ -1,39 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 
 internal class SufficientDungeon : Dungeon
 {
 	protected Random rnd;
 	protected bool[,] walkableGrid;
-	protected Area RootArea;
+	protected BSPNode RootArea;
 	protected Dictionary<int, Room> roomMap;
 
 	protected int minRoomSize;
+
+	public static readonly BooleanSwitch informativeOutput = new BooleanSwitch("Informative output", "Provides extra info on dungeon generation when enabled");
 
 	public SufficientDungeon(Size pSize) : base(pSize) { }
 
 	protected override void generate(int pMinimumRoomSize)
 	{
-		rnd = new Random();
+		rnd = new Random(AlgorithmsAssignment.seed);
 		minRoomSize = pMinimumRoomSize;
 
 		walkableGrid = new bool[size.Width, size.Height];
 
-		RootArea = new Area(new Rectangle(0, 0, size.Width, size.Height));
-		RootArea.Split(pMinimumRoomSize + 2, 10, new Random());
-		Console.WriteLine(RootArea.TreeToString());
+		// Create area and split it to specified depth
+
+		RootArea = new BSPNode(new Rectangle(0, 0, size.Width, size.Height));
+		RootArea.Split(pMinimumRoomSize + 2, AlgorithmsAssignment.BSP_DEPTH, rnd);
+
+		Debug.WriteIf(informativeOutput.Enabled, RootArea.TreeToString());
 
 		PlaceRooms(RootArea);
 		PlaceDoors(RootArea);
-
-		Console.WriteLine();
 	}
 
-	protected virtual void PlaceRooms(Area rootArea)
+	protected virtual void PlaceRooms(BSPNode rootArea)
 	{
 		roomMap = new Dictionary<int, Room>();
-		foreach (Area leaf in rootArea.Leaves)
+		foreach (BSPNode leaf in rootArea.Leaves)
 		{
 			Size roomSize = new Size(leaf.Width, leaf.Height);
 			Point roomPosition = new Point(leaf.X, leaf.Y);
@@ -41,11 +45,11 @@ internal class SufficientDungeon : Dungeon
 			AddRoom(room, leaf.ID);
 		}
 	}
-	protected virtual void PlaceDoors(Area rootArea)
+	protected virtual void PlaceDoors(BSPNode rootArea)
 	{
-		Console.WriteLine("Generating doors...");
+		Debug.WriteLineIf(informativeOutput.Enabled, "Generating doors...");
 
-		foreach ((Area a, Area b) in rootArea.Pairs)
+		foreach ((BSPNode a, BSPNode b) in rootArea.Pairs)
 		{
 			bool doorValid = false;
 			int doorX = 0;
@@ -86,8 +90,8 @@ internal class SufficientDungeon : Dungeon
 				}
 			}
 
-			Area sideA;
-			Area sideB;
+			BSPNode sideA;
+			BSPNode sideB;
 
 			if (doorHorizontal)
 			{
@@ -115,22 +119,22 @@ internal class SufficientDungeon : Dungeon
 			roomB.doors.Add(door);
 			AddDoor(door);
 
-			Console.WriteLine(door);
+			Debug.WriteLineIf(informativeOutput.Enabled, door);
 		}
 
-		Console.WriteLine("Doors generated");
+		Debug.WriteLineIf(informativeOutput.Enabled, "Doors generated");
 	}
 
-	private void AddDoor(Door door)
+	protected virtual void AddDoor(Door door)
 	{
 		doors.Add(door);
 		walkableGrid[door.location.X, door.location.Y] = true;
 	}
-	private void AddRoom(Room room, int areaID)
+	protected virtual void AddRoom(Room room, int areaID)
 	{
 		rooms.Add(room);
 		roomMap.Add(areaID, room);
-		Console.WriteLine("Added room #{0} to dictionary under ({1})", room.ID, areaID);
+		Debug.WriteLineIf(informativeOutput.Enabled, $"Added room #{room.ID} to dictionary under ({areaID})");
 
 		for (int y = 0; y < room.area.Height - 2; y++)
 		{

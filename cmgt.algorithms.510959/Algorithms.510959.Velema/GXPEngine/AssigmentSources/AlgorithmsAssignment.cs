@@ -2,7 +2,12 @@ using GXPEngine;
 using GXPEngine.AssigmentSources.Solution;
 using GXPEngine.Control;
 using GXPEngine.OpenGL;
+using System;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 
 /**
  * This is the main 'game' for the Algorithms Assignment that accompanies the Algorithms course.
@@ -28,8 +33,13 @@ class AlgorithmsAssignment : Scene
 	PathFinder _pathFinder = null;
 
 	//common settings
-	private const int SCALE = 5;               // TODO: experiment with changing this
-	private const int MIN_ROOM_SIZE = 7;        // TODO: use this setting in your dungeon generator
+	private const int SCALE = 15;               // TODO: experiment with changing this
+	private const int MIN_ROOM_SIZE = 7;       // TODO: use this setting in your dungeon generator
+	
+	public const int BSP_DEPTH = 4;
+
+	private readonly Stopwatch sw;
+
 
 	public AlgorithmsAssignment()
 	{
@@ -73,24 +83,20 @@ class AlgorithmsAssignment : Scene
 		// Done: Study the Dungeon, Room and Door classes
 		// Done: Study the SampleDungeon class and try it out below
 		// Done: Comment out SampleDungeon below, implement a SufficientDungeon class and uncomment it below
-
-		//_dungeon = new SampleDungeon(size);
-		_dungeon = new SufficientDungeon(size);
-
 		/////////////////////////////////
 		// Assignment 1.2 Good (optional)
 		// 
 		// TODO: Study assignment 1.2 on blackboard
 		// TODO: Comment out SufficientDungeon above, implement a GoodDungeon class, and uncomment it below
-
-		//_dungeon = new GoodDungeon(size);
-
 		//////////////////////////////////////
 		// Assignment 1.3 Excellent (optional)
 		//
 		// TODO: Study assignment 1.3 on blackboard
 		// TODO: Comment out GoodDungeon above, implement an ExcellentDungeon class, and uncomment it below
 
+		//_dungeon = new SampleDungeon(size);
+		//_dungeon = new SufficientDungeon(size);
+		_dungeon = new GoodDungeon(size);
 		//_dungeon = new ExcellentDungeon(size);
 
 		if (_dungeon != null)
@@ -204,19 +210,52 @@ class AlgorithmsAssignment : Scene
 		/////////////////////////////////////////////////
 		// The end!
 		////
+		///
+		sw = new Stopwatch();
+		sw.Start();
 	}
 
+
+	public static int seed = 0;
 	public void Update()
 	{
-		if (Input.GetKeyDown(Key.R))
+		if (sw.ElapsedMilliseconds > 500)
 		{
-			_dungeon.Generate(MIN_ROOM_SIZE);
-			_graph.Generate();
-
-			NodeLabelDrawer[] nld = FindObjectsOfType<NodeLabelDrawer>();
-			RemoveChild(nld[0]);
-			AddChild(new NodeLabelDrawer(_graph));
+			seed++;
+			sw.Restart();
+			Regenerate();
 		}
+		if (Input.GetKeyDown(Key.F2))
+		{
+			SufficientDungeon.informativeOutput.Enabled = !SufficientDungeon.informativeOutput.Enabled;
+		}
+
+		if (Input.GetKeyDown(Key.SPACE))
+		{
+			if (sw.IsRunning) sw.Stop();
+			else sw.Restart();
+		}
+
+		if (Input.GetKeyDown(Key.LEFT))
+		{
+			seed--;
+			Regenerate();
+		}
+		if (Input.GetKeyDown(Key.RIGHT))
+		{
+			seed++;
+			Regenerate();
+		}
+	}
+
+	private void Regenerate()
+	{
+		_dungeon.Generate(MIN_ROOM_SIZE);
+		_graph.Generate();
+
+		NodeLabelDrawer[] nld = FindObjectsOfType<NodeLabelDrawer>();
+		RemoveChild(nld[0]);
+		AddChild(new NodeLabelDrawer(_graph));
 	}
 }
 

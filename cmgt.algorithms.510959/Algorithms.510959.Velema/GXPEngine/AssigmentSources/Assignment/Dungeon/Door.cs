@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 /**
  * This class represents (the data for) a Door, at this moment only a position in the dungeon.

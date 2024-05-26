@@ -7,16 +7,21 @@ using System.Drawing;
  */
 class NodeLabelDrawer : Canvas
 {
+	static bool showedHowTo = false;
 	private Font _labelFont;
 	private bool _showLabels = false;
 	private NodeGraph _graph = null;
 
 	public NodeLabelDrawer(NodeGraph pNodeGraph) : base(pNodeGraph.width, pNodeGraph.height)
 	{
-		Console.WriteLine("\n-----------------------------------------------------------------------------");
-		Console.WriteLine("NodeLabelDrawer created.");
-		Console.WriteLine("* L key to toggle node label display.");
-		Console.WriteLine("-----------------------------------------------------------------------------");
+		if (!showedHowTo)
+		{
+			Console.WriteLine("\n-----------------------------------------------------------------------------");
+			Console.WriteLine("NodeLabelDrawer created.");
+			Console.WriteLine("* L key to toggle node label display.");
+			Console.WriteLine("-----------------------------------------------------------------------------");
+			showedHowTo = true;
+		}
 
 		_labelFont = new Font(SystemFonts.DefaultFont.FontFamily, pNodeGraph.nodeSize * 2, FontStyle.Bold);
 		_graph = pNodeGraph;

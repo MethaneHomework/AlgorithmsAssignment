@@ -1,6 +1,7 @@
 ﻿using GXPEngine;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 
 /**
@@ -14,6 +15,8 @@ using System.Drawing;
  */
 abstract class NodeGraph : Canvas
 {
+	static bool explainedHowTo = false;
+
 	//references to all the nodes in our nodegraph
 	public readonly List<Node> nodes = new List<Node>();
 
@@ -42,10 +45,14 @@ abstract class NodeGraph : Canvas
 	{
 		nodeSize = pNodeSize;
 
-		Console.WriteLine("\n-----------------------------------------------------------------------------");
-		Console.WriteLine(this.GetType().Name + " created.");
-		Console.WriteLine("* (Shift) LeftClick/RightClick on nodes to trigger the corresponding events.");
-		Console.WriteLine("-----------------------------------------------------------------------------");
+		if (!explainedHowTo)
+		{
+			Console.WriteLine("\n-----------------------------------------------------------------------------");
+			Console.WriteLine(this.GetType().Name + " created.");
+			Console.WriteLine("* (Shift) LeftClick/RightClick on nodes to trigger the corresponding events.");
+			Console.WriteLine("-----------------------------------------------------------------------------");
+			explainedHowTo = true;
+		}
 	}
 
 	/**
@@ -66,14 +73,17 @@ abstract class NodeGraph : Canvas
 	 */
 	public void Generate()
 	{
-		System.Console.WriteLine(this.GetType().Name + ".Generate: Generating graph...");
+		
+		Debug.WriteLineIf(SufficientDungeon.informativeOutput.Enabled, 
+			this.GetType().Name + ".Generate: Generating graph...");
 
 		//always remove all nodes before generating the graph, as it might have been generated previously
 		nodes.Clear();
 		generate();
 		draw();
 
-		System.Console.WriteLine(this.GetType().Name + ".Generate: Graph generated.");
+		Debug.WriteLineIf(SufficientDungeon.informativeOutput.Enabled, 
+			this.GetType().Name + ".Generate: Graph generated.");
 	}
 
 	protected abstract void generate();

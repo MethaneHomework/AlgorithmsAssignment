@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Security.Policy;
 
 /**
  * This class represents a single node in a nodegraph.
@@ -28,19 +30,24 @@ class Node
 	 * @param pLocation the position of this node
 	 * @param pLabel a label for the node, if null a unique id is assigned.
 	 */
-	public Node(Point pLocation)
+	public Node(Point pLocation, string pLabel = null)
 	{
 		location = pLocation;
 
 		//use an autoincrementing id as label
-		id = "" + lastID++;
-		System.Console.WriteLine(id);
+		if (pLabel == null)
+		{
+			id = lastID++.ToString();
+			//System.Console.WriteLine(id);
+		}
+		else id = pLabel;
+	}
+	public Node(Door door, float scale)
+	{
+		location = new Point((int)( (door.location.X + 0.5f) * scale), (int)( (door.location.Y + 0.5f) * scale));
+		id = lastID++ + "-door";
 	}
 
-	public override string ToString()
-	{
-		return
-			$"Node #{id}";
-	}
+	public override string ToString() => $"Node #{id}";
 }
 
