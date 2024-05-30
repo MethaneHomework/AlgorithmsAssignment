@@ -76,18 +76,6 @@ class AlgorithmsAssignment : Scene
 		// Eg walls are SCALE pixels thick, doors are squares with an area of SCALE * SCALE pixels.
 		Size size = new Size(Width / SCALE, Height / SCALE);
 
-		////////////////////////////////////////
-		// Assignment 1.1 Sufficient (Mandatory)
-		// 
-		// Done: Study assignment 1.1 on blackboard
-		// Done: Study the Dungeon, Room and Door classes
-		// Done: Study the SampleDungeon class and try it out below
-		// Done: Comment out SampleDungeon below, implement a SufficientDungeon class and uncomment it below
-		/////////////////////////////////
-		// Assignment 1.2 Good (optional)
-		// 
-		// TODO: Study assignment 1.2 on blackboard
-		// TODO: Comment out SufficientDungeon above, implement a GoodDungeon class, and uncomment it below
 		//////////////////////////////////////
 		// Assignment 1.3 Excellent (optional)
 		//
@@ -264,6 +252,17 @@ class AlgorithmsAssignment : Scene
 		AddChild(agent);
 
 		Console.WriteLine("Generated dungeon using seed {0}", seed);
+	}
+
+	private void Regenerate2()
+	{
+		if (grid != null) AddChild(grid);
+		if (_dungeon != null) AddChild(_dungeon);
+		if (_tiledView != null) AddChild(_tiledView);
+		if (_graph != null) AddChild(_graph);
+		if (_pathFinder != null) AddChild(_pathFinder);             //pathfinder on top of that
+		if (_graph != null) AddChild(new NodeLabelDrawer(_graph));  //node label display on top of that
+		if (_agent != null) AddChild(_agent);                       //and last but not least the agent itself
 	}
 }
 

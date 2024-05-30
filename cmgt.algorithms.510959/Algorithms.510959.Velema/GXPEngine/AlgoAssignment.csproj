@@ -45,6 +45,7 @@
     <Folder Include="Engine\Control\Scenes\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssigmentSources\Solution\Dungeon\ExcellentDungeon.cs" />
     <Compile Include="AssigmentSources\Solution\Dungeon\GoodDungeon.cs" />
     <Compile Include="AssigmentSources\Solution\Util\BSPNode.cs" />
     <Compile Include="AssigmentSources\Solution\Dungeon\SufficientDungeon.cs" />
