@@ -7,6 +7,8 @@
 class Door
 {
 	public readonly Point location;
+	private static int lastID = 0;
+	public readonly int ID;
 
 	//Keeping tracks of the Rooms that this door connects to,
 	//might make your life easier during some of the assignments
@@ -20,10 +22,15 @@ class Door
 	public Door(Point pLocation)
 	{
 		location = pLocation;
+		unchecked { ID = lastID++; }
 	}
 
 	//TODO: Implement a toString method for debugging
 	//Return information about the type of object and it's data
 	//eg Door: (x,y)
+	public override string ToString()
+	{
+		return $"Door #{ID}: Connects Room #{roomA.ID} to Room #{roomB.ID}";
+	}
 }
 

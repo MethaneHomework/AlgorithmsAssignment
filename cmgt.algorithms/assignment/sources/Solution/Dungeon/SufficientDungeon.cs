@@ -18,51 +18,86 @@ internal class SufficientDungeon : Dungeon
 
 		GenerateRooms(pMinimumRoomSize);
 		GenerateDoors();
+
+		foreach (Room room in rooms) Console.WriteLine(room.ToString());
+		foreach (Door door in doors) Console.WriteLine(door.ToString());
 	}
 
 	protected virtual void GenerateRooms(int pMinimumRoomSize)
 	{
 		RootNode.SplitRecursive(3, pMinimumRoomSize, rng);
 
-		foreach (Rectangle rect in RootNode.LeafBounds)
+		foreach (BSPNode node in RootNode.LeafNodes)
 		{
-			rooms.Add(new Room(new Rectangle(rect.X - 1, rect.Y - 1, rect.Width + 2, rect.Height + 2)));
+			Room room = new Room( new Rectangle(node.Bounds.X - 1, node.Bounds.Y - 1, node.Bounds.Width + 2, node.Bounds.Height + 2) );
+			rooms.Add(room);
+			node.Room = room;
 		}
 	}
 	protected virtual void GenerateDoors()
 	{
 		foreach (var (a, b) in RootNode.SiblingPairs)
 		{
-			int doorX;
-			int doorY;
-			bool valid = false;
-			Point doorLoc = new Point();
-
-			while (!valid)
-			{
-				if (a.Bounds.X == b.Bounds.X)
-				{
-					// Aligned on top of each other
-					doorX = rng.Next(a.Bounds.Left, a.Bounds.Right);
-					doorY = a.Bounds.Bottom;
-					doorLoc = new Point(doorX, doorY);
-
-					valid = RootNode.FindPoint(new Point(doorX, doorY - 1)) != null && RootNode.FindPoint(new Point(doorX, doorY + 1)) != null;
-				}
-				else
-				{
-					// Aligned next to each other
-					doorX = a.Bounds.Right;
-					doorY = rng.Next(a.Bounds.Top, a.Bounds.Bottom);
-					doorLoc = new Point(doorX, doorY);
-
-					valid = RootNode.FindPoint(new Point(doorX - 1, doorY)) != null && RootNode.FindPoint(new Point(doorX + 1, doorY)) != null;
-				}
-			}
-
-			Console.WriteLine("Adding door at {0}", doorLoc);
-			doors.Add(new Door(doorLoc));
+			GenerateDoor(a, b);
 		}
+	}
+
+	private void GenerateDoor(BSPNode a, BSPNode b)
+	{
+		int doorX;
+		int doorY;
+		bool valid = false;
+		Point doorLoc = new Point();
+
+		Room connectedA = null;
+		Room connectedB = null;
+
+		while (!valid)
+		{
+			if (a.Bounds.X == b.Bounds.X)
+			{
+				// Aligned on top of each other
+				doorX = rng.Next(a.Bounds.Left, a.Bounds.Right);
+				doorY = a.Bounds.Bottom;
+				doorLoc = new Point(doorX, doorY);
+
+				BSPNode sideA = RootNode.FindPoint(new Point(doorX, doorY - 1));
+				BSPNode sideB = RootNode.FindPoint(new Point(doorX, doorY + 1));
+
+				if (sideA == null || sideB == null) continue;
+				else valid = true;
+
+				connectedA = sideA.Room;
+				connectedB = sideB.Room;
+			}
+			else
+			{
+				// Aligned next to each other
+				doorX = a.Bounds.Right;
+				doorY = rng.Next(a.Bounds.Top, a.Bounds.Bottom);
+				doorLoc = new Point(doorX, doorY);
+
+				BSPNode sideA = RootNode.FindPoint(new Point(doorX - 1, doorY));
+				BSPNode sideB = RootNode.FindPoint(new Point(doorX + 1, doorY));
+
+				if (sideA == null || sideB == null) continue;
+				else valid = true;
+
+				connectedA = sideA.Room;
+				connectedB = sideB.Room;
+			}
+		}
+
+		Door door = new Door(doorLoc)
+		{
+			roomA = connectedA,
+			roomB = connectedB,
+		};
+
+		connectedA.doors.Add(door);
+		connectedB.doors.Add(door);
+
+		doors.Add(door);
 	}
 
 	protected override void drawDoor(Door pDoor, Pen pColor)

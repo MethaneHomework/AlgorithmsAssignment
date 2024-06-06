@@ -9,6 +9,8 @@ internal class BSPNode
 	public BSPNode Parent;
 	public BSPNode ChildA, ChildB;
 
+	public Room Room;
+
 	public BSPNode(Rectangle bounds, BSPNode parent = null)
 	{
 		Bounds = bounds;
