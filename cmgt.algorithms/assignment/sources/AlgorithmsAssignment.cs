@@ -65,30 +65,15 @@ class AlgorithmsAssignment : Game
 		Size size = new Size(width / SCALE, height / SCALE);
 
 		////////////////////////////////////////
-		//Assignment 1.1 Sufficient (Mandatory)
-		//
-		//TODO: Study assignment 1.1 on blackboard
-		//TODO: Study the Dungeon, Room and Door classes
-		//TODO: Study the SampleDungeon class and try it out below
-		//TODO: Comment out SampleDungeon below, implement a SufficientDungeon class and uncomment it below
+		// Assignment 1.1 Sufficient (Mandatory)
+		// 
+		// TODO: Create SufficientDungeon class
+		// TODO: Create GoodDungeon class
+		// TODO: Create ExcellentDungeon class
 
 		_dungeon = new SampleDungeon(size);
 		//_dungeon = new SufficientDungeon(size);
-
-		/////////////////////////////////
-		//Assignment 1.2 Good (optional)
-		//
-		//TODO: Study assignment 1.2 on blackboard
-		//TODO: Comment out SufficientDungeon above, implement a GoodDungeon class, and uncomment it below
-
 		//_dungeon = new GoodDungeon(size);
-
-		//////////////////////////////////////
-		//Assignment 1.3 Excellent (optional)
-		//
-		//TODO: Study assignment 1.3 on blackboard
-		//TODO: Comment out GoodDungeon above, implement an ExcellentDungeon class, and uncomment it below
-
 		//_dungeon = new ExcellentDungeon(size);
 
 		if (_dungeon != null)
@@ -99,18 +84,29 @@ class AlgorithmsAssignment : Game
 			_dungeon.Generate(MIN_ROOM_SIZE);
 		}
 
-		/////////////////////////////////////////////////////////////////////////////////////////
-		/// ASSIGNMENT 2 : GRAPHS, AGENTS & TILES
-		///							
-		/// SKIP THIS BLOCK UNTIL YOU'VE FINISHED ASSIGNMENT 1 AND ASKED FOR TEACHER FEEDBACK !
 
-		/////////////////////////////////////////////////////////////
-		//Assignment 2.1 Sufficient (Mandatory) High Level NodeGraph
+
+
+		// -----------------------------------------------------------------
+		// Assignment 2.1 Sufficient (Mandatory) OnGraphWayPointAgent
 		//
-		//TODO: Study assignment 2.1 on blackboard
-		//TODO: Study the NodeGraph and Node classes
-		//TODO: Study the SampleDungeonNodeGraph class and try it out below
-		//TODO: Comment out the SampleDungeonNodeGraph again, implement a HighLevelDungeonNodeGraph class and uncomment it below
+		// TODO: Implement an OnGraphWayPointAgent class
+		// TODO: Implement HighLevelDungeonNodeGraph
+		// TODO: Implement LowLevelDungeonNodeGraph
+		//
+		// -----------------------------------------------------------------
+		//
+		// Assignment 2.2 Good (Optional) TiledView & RandomWayPointagent
+		//
+		// TODO: Implement TiledView
+		// TODO: Implement a RandomWayPointAgent class
+		//
+		// -----------------------------------------------------------------
+		//
+		// Assignment 2.3 Excellent (Optional) LowLevelDungeonNodeGraph
+		//
+		// TODO: Implement the LowLevelDungeonNodeGraph 
+		//
 
 		//_graph = new SampleDungeonNodeGraph(_dungeon);
 		//_graph = new HighLevelDungeonNodeGraph(_dungeon);
@@ -118,39 +114,14 @@ class AlgorithmsAssignment : Game
 
 		if (_graph != null) _graph.Generate();
 
-		/////////////////////////////////////////////////////////////
-		//Assignment 2.1 Sufficient (Mandatory) OnGraphWayPointAgent
-		//
-		//TODO: Study the NodeGraphAgent class
-		//TODO: Study the SampleNodeGraphAgent class and try it out below
-		//TODO: Comment out the SampleNodeGraphAgent again, implement an OnGraphWayPointAgent class and uncomment it below
-
-		//_agent = new SampleNodeGraphAgent(_graph);
-		//_agent = new OnGraphWayPointAgent(_graph);
-
-		////////////////////////////////////////////////////////////
-		//Assignment 2.2 Good (Optional) TiledView
-		//
-		//TODO: Study assignment 2.2 on blackboard
-		//TODO: Study the TiledView and TileType classes
-		//TODO: Study the SampleTileView class and try it out below
-		//TODO: Comment out the SampleTiledView again, implement the TiledDungeonView and uncomment it below
-
 		//_tiledView = new SampleTiledView(_dungeon, TileType.GROUND);
 		//_tiledView = new TiledDungeonView(_dungeon, TileType.GROUND); 
 		if (_tiledView != null) _tiledView.Generate();
 
-		////////////////////////////////////////////////////////////
-		//Assignment 2.2 Good (Optional) RandomWayPointAgent
-		//
-		//TODO: Comment out the OnGraphWayPointAgent above, implement a RandomWayPointAgent class and uncomment it below
-
+		//_agent = new SampleNodeGraphAgent(_graph);
+		//_agent = new OnGraphWayPointAgent(_graph);
 		//_agent = new RandomWayPointAgent(_graph);	
 
-		//////////////////////////////////////////////////////////////
-		//Assignment 2.3 Excellent (Optional) LowLevelDungeonNodeGraph
-		//
-		//TODO: Comment out the HighLevelDungeonNodeGraph above, and implement the LowLevelDungeonNodeGraph 
 
 		/////////////////////////////////////////////////////////////////////////////////////////
 		/// ASSIGNMENT 3 : PathFinding and PathFindingAgents

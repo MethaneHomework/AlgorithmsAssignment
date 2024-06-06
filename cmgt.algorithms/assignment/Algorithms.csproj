@@ -159,7 +159,10 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="sources\Solution\Dungeon\" />
+    <Folder Include="sources\Solution\Util\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="sources\Solution\readme.txt" />
   </ItemGroup>

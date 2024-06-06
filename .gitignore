@@ -1,12 +1,18 @@
 
-cmgt.algorithms.student/assignment/.vs/
+cmgt.algorithms/assignment/.vs/
 
-cmgt.algorithms.student/assignment/bin/
+cmgt.algorithms/assignment/bin/Debug/dcg.exe
 
-cmgt.algorithms.student/assignment/obj/
+cmgt.algorithms/assignment/bin/Debug/dcg.exe.config
 
-cmgt.algorithms.student/gxpengine/.idea/
+cmgt.algorithms/assignment/bin/Debug/dcg.pdb
 
-cmgt.algorithms.student/gxpengine/gxpengine/bin/
+cmgt.algorithms/assignment/bin/Debug/GXPEngine.exe
 
-cmgt.algorithms.student/gxpengine/gxpengine/obj/
+cmgt.algorithms/assignment/bin/Debug/GXPEngine.pdb
+
+cmgt.algorithms/assignment/obj/
+
+cmgt.algorithms/gxpengine/.idea/
+
+cmgt.algorithms/gxpengine/.vs/

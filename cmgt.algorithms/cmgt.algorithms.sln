@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.329
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithms", "Algorithms.csproj", "{66F25691-4FBE-4BCD-A610-0E740B8F3CED}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{02B55F0B-C9F5-4C24-A699-392586C0A391}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithms", "assignment\Algorithms.csproj", "{66F25691-4FBE-4BCD-A610-0E740B8F3CED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,7 +21,10 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{66F25691-4FBE-4BCD-A610-0E740B8F3CED} = {02B55F0B-C9F5-4C24-A699-392586C0A391}
+	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {5622D561-1E6F-4F85-98CF-EA810AE77AB8}
+		SolutionGuid = {1477AB25-DA30-4017-B25B-C8E0965A6E00}
 	EndGlobalSection
 EndGlobal
