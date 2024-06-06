@@ -3,15 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 
-/**
- * This class is the base class for your pathfinder, you 'only' have to override generate so that it returns
- * the requested path and then it will handle the visualization part for you. This class can be used in two ways:
- * 1. By setting the start and end node by left/right shift-clicking and then pressing G (for Generate)
- * 2. By calling Generate directly with the given start and end node
- * 
- * TODO:
- * - create a subclass for this class and override the generate method (See SamplePathFinder for an example)
- */
+// This class is the base class for your pathfinder, you 'only' have to override generate so that it returns
+// the requested path and then it will handle the visualization part for you. This class can be used in two ways:
+// 1. By setting the start and end node by left/right shift-clicking and then pressing G (for Generate)
+// 2. By calling Generate directly with the given start and end node
+// 
+// TODO: Create a subclass for this class and override the generate method (See SamplePathFinder for an example)
 abstract class PathFinder : Canvas
 {
 	protected Node _startNode;							
@@ -85,28 +82,28 @@ abstract class PathFinder : Canvas
 
 	protected virtual void draw()
 	{
-		//to keep things simple we redraw all debug info every frame
+		// To keep things simple we redraw all debug info every frame
 		graphics.Clear(Color.Transparent);
 
-		//draw path if we have one
+		// Draw path if we have one
 		if (_lastCalculatedPath != null) drawPath();
 
-		//draw start and end if we have one
+		// Draw start and end if we have one
 		if (_startNode != null) drawNode(_startNode, _startNodeColor);
 		if (_endNode != null) drawNode(_endNode, _endNodeColor);
 
-		//TODO: you could override this method and draw your own additional stuff for debugging
+		// Note: You could override this method and draw your own additional stuff for debugging
 	}
 
 	protected virtual void drawPath()
 	{
-		//draw all lines
+		// Draw all lines
 		for (int i = 0; i < _lastCalculatedPath.Count - 1; i++)
 		{
 			drawConnection(_lastCalculatedPath[i], _lastCalculatedPath[i + 1]);
 		}
 
-		//draw all nodes between start and end
+		// Draw all nodes between start and end
 		for (int i = 1; i < _lastCalculatedPath.Count - 1; i++)
 		{
 			drawNode(_lastCalculatedPath[i], _pathNodeColor);
@@ -122,7 +119,7 @@ abstract class PathFinder : Canvas
 	{
 		int nodeSize = _nodeGraph.nodeSize+2;
 
-		//colored fill
+		// Colored fill
 		graphics.FillEllipse(
 			pColor,
 			pNode.location.X - nodeSize,
@@ -131,7 +128,7 @@ abstract class PathFinder : Canvas
 			2 * nodeSize
 		);
 
-		//black outline
+		// Black outline
 		graphics.DrawEllipse(
 			_outlinePen,
 			pNode.location.X - nodeSize - 1,
@@ -143,7 +140,7 @@ abstract class PathFinder : Canvas
 
 	protected virtual void drawConnection(Node pStartNode, Node pEndNode)
 	{
-		//draw a thick black line with yellow core
+		// Draw a thick black line with yellow core
 		graphics.DrawLine(_connectionPen1,	pStartNode.location,pEndNode.location);
 		graphics.DrawLine(_connectionPen2,	pStartNode.location,pEndNode.location);
 	}

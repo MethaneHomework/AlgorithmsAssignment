@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using GXPEngine;
@@ -29,10 +30,10 @@ class AlgorithmsAssignment : Game
 	PathFinder _pathFinder = null;
 
 	//common settings
-	private const int SCALE = 20;				//TODO: experiment with changing this
-	private const int MIN_ROOM_SIZE = 7;		//TODO: use this setting in your dungeon generator
+	private const int SCALE = 16;				// Done: experiment with changing this
+	private const int MIN_ROOM_SIZE = 7;		// Done: use this setting in your dungeon generator
 
-	public AlgorithmsAssignment() : base(800, 600, false, true, -1, -1, false)
+	public AlgorithmsAssignment() : base(1200, 800, false, true, -1, -1, false)
 	{
 		/////////////////////////////////////////////////////////////////////////////////////////
 		///	BASE SETUP - FEEL FREE TO SKIP
@@ -41,30 +42,31 @@ class AlgorithmsAssignment : Game
 		GL.ClearColor(1, 1, 1, 1);
 		GL.glfwSetWindowTitle("Algorithms Game");
 
-		//The simplest approach to visualize a dungeon, is using black and white squares
-		//to show where the walls (black) and walkable areas/doors (white) are.
-		//A quick and easy way to implement that is by creating a small canvas, 
-		//draw black and white pixels on it and scale it up by an insane amount (e.g. 40).
+		// The simplest approach to visualize a dungeon, is using black and white squares
+		// to show where the walls (black) and walkable areas/doors (white) are.
+		// A quick and easy way to implement that is by creating a small canvas, 
+		// draw black and white pixels on it and scale it up by an insane amount (e.g. 40).
 		//
-		//To visualize where these scaled pixels are we also add a grid, where we use
-		//this same SCALE value as a grid size setting. Comment out the next line to hide it.
+		// To visualize where these scaled pixels are we also add a grid, where we use
+		// this same SCALE value as a grid size setting. Comment out the next line to hide it.
 		Grid grid = new Grid(width, height, SCALE);
+		AddChild(grid);
 
 		/////////////////////////////////////////////////////////////////////////////////////////
 		///	ASSIGNMENT 1 : DUNGEON - READ CAREFULLY
 		///
 
-		//The Dungeon in this assignment is an object that holds Rooms & Doors instances, and
-		//extends a canvas that we scale up so that it can visualize these rooms & doors.
-		//In a 'real' setting you would split this 'model' of the dungeon from the visualization,
-		//but we chose to not make it more complicated than necessary.
-
-		//To calculate the size of the dungeon we can create, we take our screen size and
-		//divide it by how much we want to scale everything up. For example if our screen size is 800 
-		//and the dungeon scale 40, we would like our dungeon to have a max width of 20 'units'
-		//so that if we scale it up by 40, its screenwidth is 800 pixels again.
-		//Basically this means every pixel drawn in the dungeon has the size of the SCALE setting.
-		//Eg walls are SCALE pixels thick, doors are squares with an area of SCALE * SCALE pixels.
+		// The Dungeon in this assignment is an object that holds Rooms & Doors instances, and
+		// extends a canvas that we scale up so that it can visualize these rooms & doors.
+		// In a 'real' setting you would split this 'model' of the dungeon from the visualization,
+		// but we chose to not make it more complicated than necessary.
+		//
+		// To calculate the size of the dungeon we can create, we take our screen size and
+		// divide it by how much we want to scale everything up. For example if our screen size is 800 
+		// and the dungeon scale 40, we would like our dungeon to have a max width of 20 'units'
+		// so that if we scale it up by 40, its screenwidth is 800 pixels again.
+		// Basically this means every pixel drawn in the dungeon has the size of the SCALE setting.
+		// Eg walls are SCALE pixels thick, doors are squares with an area of SCALE * SCALE pixels.
 		_size = new Size(width / SCALE, height / SCALE);
 
 		InitializeDungeon();
@@ -79,10 +81,10 @@ class AlgorithmsAssignment : Game
 		// TODO: Create GoodDungeon class
 		// TODO: Create ExcellentDungeon class
 
-		_dungeon = new SampleDungeon(_size);
-		//_dungeon = new SufficientDungeon(size);
-		//_dungeon = new GoodDungeon(size);
-		//_dungeon = new ExcellentDungeon(size);
+		//_dungeon = new SampleDungeon(_size);
+		_dungeon = new SufficientDungeon(_size);
+		//_dungeon = new GoodDungeon(_size);
+		//_dungeon = new ExcellentDungeon(_size);
 
 		if (_dungeon != null)
 		{
@@ -115,11 +117,11 @@ class AlgorithmsAssignment : Game
 		//_graph = new SampleDungeonNodeGraph(_dungeon);
 		//_graph = new HighLevelDungeonNodeGraph(_dungeon);
 		//_graph = new LowLevelDungeonNodeGraph(_dungeon);
-		if (_graph != null) _graph.Generate();
+		_graph?.Generate();
 
 		//_tiledView = new SampleTiledView(_dungeon, TileType.GROUND);
 		//_tiledView = new TiledDungeonView(_dungeon, TileType.GROUND); 
-		if (_tiledView != null) _tiledView.Generate();
+		_tiledView?.Generate();
 
 		//_agent = new SampleNodeGraphAgent(_graph);
 		//_agent = new OnGraphWayPointAgent(_graph);
@@ -164,6 +166,7 @@ class AlgorithmsAssignment : Game
         if (Input.GetKeyDown(Key.R))
         {
 			ClearChildren();
+			Console.Clear();
 			InitializeDungeon();
         }
     }
@@ -174,6 +177,7 @@ class AlgorithmsAssignment : Game
 		for (int i = children.Count - 1; i >= 0; i--)
 		{
 			GameObject child = children[i];
+			if (child is Grid) continue;
 			RemoveChild(child);
 			child.Destroy();
 		}
