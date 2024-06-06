@@ -146,6 +146,8 @@
     <Compile Include="sources\Assignment\Tiles\TiledView.cs" />
     <Compile Include="sources\Program.cs" />
     <Compile Include="sources\Assignment\PathFinding\PathFinder.cs" />
+    <Compile Include="sources\Solution\Util\BinaryTree.cs" />
+    <Compile Include="sources\Solution\Util\RoomBT.cs" />
     <Compile Include="sources\Util\Grid.cs" />
     <Compile Include="sources\Util\NodeLabelDrawer.cs" />
     <Compile Include="sources\Util\RectangleExtensions.cs" />
@@ -161,7 +163,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="sources\Solution\Dungeon\" />
-    <Folder Include="sources\Solution\Util\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="sources\Solution\readme.txt" />

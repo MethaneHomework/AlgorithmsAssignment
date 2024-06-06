@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Drawing;
 using GXPEngine;
 using GXPEngine.OpenGL;
@@ -14,6 +15,8 @@ using GXPEngine.OpenGL;
  */
 class AlgorithmsAssignment : Game
 {
+	readonly Size _size;
+
 	//Required for assignment 1
 	Dungeon _dungeon = null;
 
@@ -62,16 +65,21 @@ class AlgorithmsAssignment : Game
 		//so that if we scale it up by 40, its screenwidth is 800 pixels again.
 		//Basically this means every pixel drawn in the dungeon has the size of the SCALE setting.
 		//Eg walls are SCALE pixels thick, doors are squares with an area of SCALE * SCALE pixels.
-		Size size = new Size(width / SCALE, height / SCALE);
+		_size = new Size(width / SCALE, height / SCALE);
 
-		////////////////////////////////////////
+		InitializeDungeon();
+	}
+
+	private void InitializeDungeon()
+	{
+		///////////////////////////////////////
 		// Assignment 1.1 Sufficient (Mandatory)
 		// 
 		// TODO: Create SufficientDungeon class
 		// TODO: Create GoodDungeon class
 		// TODO: Create ExcellentDungeon class
 
-		_dungeon = new SampleDungeon(size);
+		_dungeon = new SampleDungeon(_size);
 		//_dungeon = new SufficientDungeon(size);
 		//_dungeon = new GoodDungeon(size);
 		//_dungeon = new ExcellentDungeon(size);
@@ -84,15 +92,11 @@ class AlgorithmsAssignment : Game
 			_dungeon.Generate(MIN_ROOM_SIZE);
 		}
 
-
-
-
 		// -----------------------------------------------------------------
 		// Assignment 2.1 Sufficient (Mandatory) OnGraphWayPointAgent
 		//
 		// TODO: Implement an OnGraphWayPointAgent class
 		// TODO: Implement HighLevelDungeonNodeGraph
-		// TODO: Implement LowLevelDungeonNodeGraph
 		//
 		// -----------------------------------------------------------------
 		//
@@ -105,13 +109,12 @@ class AlgorithmsAssignment : Game
 		//
 		// Assignment 2.3 Excellent (Optional) LowLevelDungeonNodeGraph
 		//
-		// TODO: Implement the LowLevelDungeonNodeGraph 
+		// TODO: Implement LowLevelDungeonNodeGraph
 		//
 
 		//_graph = new SampleDungeonNodeGraph(_dungeon);
 		//_graph = new HighLevelDungeonNodeGraph(_dungeon);
 		//_graph = new LowLevelDungeonNodeGraph(_dungeon);
-
 		if (_graph != null) _graph.Generate();
 
 		//_tiledView = new SampleTiledView(_dungeon, TileType.GROUND);
@@ -123,55 +126,57 @@ class AlgorithmsAssignment : Game
 		//_agent = new RandomWayPointAgent(_graph);	
 
 
-		/////////////////////////////////////////////////////////////////////////////////////////
-		/// ASSIGNMENT 3 : PathFinding and PathFindingAgents
-		///							
-		/// SKIP THIS BLOCK UNTIL YOU'VE FINISHED ASSIGNMENT 2 AND ASKED FOR TEACHER FEEDBACK !
-
-		//////////////////////////////////////////////////////////////////////////
-		//Assignment 3.1 Sufficient (Mandatory) - Recursive Pathfinding
+		// -----------------------------------------------------------------
+		// Assignment 3.1 Sufficient (Mandatory) - Recursive Pathfinding
 		//
-		//TODO: Study assignment 3.1 on blackboard
-		//TODO: Study the PathFinder class
-		//TODO: Study the SamplePathFinder class and try it out
-		//TODO: Comment out the SamplePathFinder, implement a RecursivePathFinder and uncomment it below
+		// TODO: Implement a RecursivePathFinder
+		// TODO: Implement a BreadthFirstPathFinder
+		//
+		// TODO: Implement a PathFindingAgent that uses one of your pathfinder implementations (should work with any pathfinder implementation)
+		// -----------------------------------------------------------------
+		// Assignment 3.2 Good & 3.3 Excellent (Optional)
+		//
+		// There are no more explicit TODO's to guide you through these last two parts.
+		// You are on your own. Good luck, make the best of it. Make sure your code is testable.
+		// For example for A*, you must choose a setup in which it is possible to demonstrate your 
+		// algorithm works. Find the best place to add your code, and don't forget to move the
+		// PathFindingAgent below the creation of your PathFinder!
 
 		//_pathFinder = new SamplePathFinder(_graph);
 		//_pathFinder = new RecursivePathFinder(_graph);
-
-		//////////////////////////////////////////////////////////////////////////
-		//Assignment 3.1 Sufficient (Mandatory) - BreadthFirst Pathfinding
-		//
-		//TODO: Comment out the RecursivePathFinder above, implement a BreadthFirstPathFinder and uncomment it below
 		//_pathFinder = new BreadthFirstPathFinder(_graph);
 
-		//TODO: Implement a PathFindingAgent that uses one of your pathfinder implementations (should work with any pathfinder implementation)
 		//_agent = new PathFindingAgent(_graph, _pathFinder);
 
-		/////////////////////////////////////////////////
-		//Assignment 3.2 Good & 3.3 Excellent (Optional)
-		//
-		//There are no more explicit TODO's to guide you through these last two parts.
-		//You are on your own. Good luck, make the best of it. Make sure your code is testable.
-		//For example for A*, you must choose a setup in which it is possible to demonstrate your 
-		//algorithm works. Find the best place to add your code, and don't forget to move the
-		//PathFindingAgent below the creation of your PathFinder!
 
-		//------------------------------------------------------------------------------------------
-		/// REQUIRED BLOCK OF CODE TO ADD ALL OBJECTS YOU CREATED TO THE SCREEN IN THE CORRECT ORDER
-		/// LOOK BUT DON'T TOUCH :)
-
-		if (grid != null) AddChild(grid);
+		// REQUIRED BLOCK OF CODE TO ADD ALL OBJECTS YOU CREATED TO THE SCREEN IN THE CORRECT ORDER
+		// LOOK BUT DON'T TOUCH :)
 		if (_dungeon != null) AddChild(_dungeon);
 		if (_tiledView != null) AddChild(_tiledView);
 		if (_graph != null) AddChild(_graph);
-		if (_pathFinder != null) AddChild(_pathFinder);				//pathfinder on top of that
-		if (_graph != null) AddChild(new NodeLabelDrawer(_graph));	//node label display on top of that
+		if (_pathFinder != null) AddChild(_pathFinder);             //pathfinder on top of that
+		if (_graph != null) AddChild(new NodeLabelDrawer(_graph));  //node label display on top of that
 		if (_agent != null) AddChild(_agent);                       //and last but not least the agent itself
+	}
 
-		/////////////////////////////////////////////////
-		//The end!
-		////
+	private void Update()
+	{
+        if (Input.GetKeyDown(Key.R))
+        {
+			ClearChildren();
+			InitializeDungeon();
+        }
+    }
+
+	private void ClearChildren()
+	{
+		List<GameObject> children = GetChildren();
+		for (int i = children.Count - 1; i >= 0; i--)
+		{
+			GameObject child = children[i];
+			RemoveChild(child);
+			child.Destroy();
+		}
 	}
 }
 
