@@ -11,7 +11,7 @@ using System.Drawing;
 // TODO: Create a subclass for this class and override the generate method (See SamplePathFinder for an example)
 abstract class PathFinder : Canvas
 {
-	protected Node _startNode;							
+	protected Node _startNode;
 	protected Node _endNode;
 	protected List<Node> _lastCalculatedPath = null;
 
@@ -26,7 +26,7 @@ abstract class PathFinder : Canvas
 	private Brush _endNodeColor = Brushes.Red;
 	private Brush _pathNodeColor = Brushes.Yellow;
 
-	public PathFinder (NodeGraph pGraph) : base (pGraph.width, pGraph.height)
+	public PathFinder(NodeGraph pGraph) : base(pGraph.width, pGraph.height)
 	{
 		_nodeGraph = pGraph;
 		_nodeGraph.OnNodeShiftLeftClicked += (node) => { _startNode = node; draw(); };
@@ -110,14 +110,14 @@ abstract class PathFinder : Canvas
 		}
 	}
 
-	protected virtual void drawNodes (IEnumerable<Node> pNodes, Brush pColor)
+	protected virtual void drawNodes(IEnumerable<Node> pNodes, Brush pColor)
 	{
 		foreach (Node node in pNodes) drawNode(node, pColor);
 	}
 
 	protected virtual void drawNode(Node pNode, Brush pColor)
 	{
-		int nodeSize = _nodeGraph.nodeSize+2;
+		int nodeSize = _nodeGraph.nodeSize + 2;
 
 		// Colored fill
 		graphics.FillEllipse(
@@ -141,8 +141,8 @@ abstract class PathFinder : Canvas
 	protected virtual void drawConnection(Node pStartNode, Node pEndNode)
 	{
 		// Draw a thick black line with yellow core
-		graphics.DrawLine(_connectionPen1,	pStartNode.location,pEndNode.location);
-		graphics.DrawLine(_connectionPen2,	pStartNode.location,pEndNode.location);
+		graphics.DrawLine(_connectionPen1, pStartNode.location, pEndNode.location);
+		graphics.DrawLine(_connectionPen2, pStartNode.location, pEndNode.location);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////

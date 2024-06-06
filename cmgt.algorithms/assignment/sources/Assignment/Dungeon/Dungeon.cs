@@ -3,14 +3,14 @@ using GXPEngine.OpenGL;
 using System.Collections.Generic;
 using System.Drawing;
 
- // The base Dungeon class. 
- // 
- // This class is very limited, it contains:
- //	- a(n empty) list of rooms
- //	- a(n empty) list of doors
- //	- code to visualize all rooms and doors.
- //	
- // TODO: Create a subclass of this class and override the generate method (see the SampleDungeon for an example).
+// The base Dungeon class. 
+// 
+// This class is very limited, it contains:
+//	- a(n empty) list of rooms
+//	- a(n empty) list of doors
+//	- code to visualize all rooms and doors.
+//	
+// TODO: Create a subclass of this class and override the generate method (see the SampleDungeon for an example).
 
 abstract class Dungeon : Canvas
 {
@@ -46,7 +46,7 @@ abstract class Dungeon : Canvas
 		System.Console.WriteLine(GetType().Name + " created.");
 	}
 
-	
+
 	// Clears all rooms and doors, calls generate (note the lower case),
 	// and visualizes the result by drawing on the canvas.
 	// 
@@ -77,7 +77,7 @@ abstract class Dungeon : Canvas
 	protected virtual void draw()
 	{
 		graphics.Clear(Color.Transparent);
-		drawRooms(rooms, wallPen);    
+		drawRooms(rooms, wallPen);
 		drawDoors(doors, doorPen);
 	}
 
@@ -97,7 +97,7 @@ abstract class Dungeon : Canvas
 	// @param pRoom			the room to draw
 	// @param pWallColor	the color of the walls
 	// @param pFillColor	if not null, the color of the inside of the room, if null insides will be transparent
-	protected virtual void drawRoom (Room pRoom, Pen pWallColor, Brush pFillColor = null)
+	protected virtual void drawRoom(Room pRoom, Pen pWallColor, Brush pFillColor = null)
 	{
 		// The -0.5 has two reasons:
 		// - Doing it this way actually makes sure that an area of 0,0,4,4 (x,y,width,height) is draw as an area of 0,0,4,4
@@ -114,7 +114,7 @@ abstract class Dungeon : Canvas
 		}
 	}
 
-	protected virtual void drawDoor (Door pDoor, Pen pColor)
+	protected virtual void drawDoor(Door pDoor, Pen pColor)
 	{
 		// Note the 0.5, 0.5, this forces the drawing api to draw at least 1 pixel ;)
 		graphics.DrawRectangle(pColor, pDoor.location.X, pDoor.location.Y, 0.5f, 0.5f);

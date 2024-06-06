@@ -1,5 +1,3 @@
-using System;
-
 namespace GXPEngine
 {
 	/// <summary>
@@ -7,7 +5,7 @@ namespace GXPEngine
 	/// </summary>
 	public class Pivot : GameObject
 	{
-		public Pivot () : base()
+		public Pivot() : base()
 		{
 		}
 	}

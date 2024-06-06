@@ -34,7 +34,7 @@ abstract class NodeGraph : Canvas
 	private Pen _outlinePen = new Pen(Color.Black, 2.1f);
 	private Brush _defaultNodeColor = Brushes.CornflowerBlue;
 	private Brush _highlightedNodeColor = Brushes.Cyan;
-	
+
 	/** 
 	 * Construct a nodegraph with the given screen dimensions, eg 800x600
 	 */

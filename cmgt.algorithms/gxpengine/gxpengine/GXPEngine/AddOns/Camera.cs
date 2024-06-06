@@ -1,10 +1,12 @@
-namespace GXPEngine {
+namespace GXPEngine
+{
 	/// <summary>
 	/// A Camera gameobject, that owns a rectangular render window, and determines the focal point, rotation and scale
 	/// of what's rendered in that window.
 	/// (Don't forget to add this as child somewhere in the hierarchy.)
 	/// </summary>
-	class Camera : GameObject {
+	class Camera : GameObject
+	{
 		Window _renderTarget;
 
 		/// <summary>
@@ -17,12 +19,14 @@ namespace GXPEngine {
 		/// <param name="windowY">Top y coordinate of the render window.</param>
 		/// <param name="windowWidth">Width of the render window.</param>
 		/// <param name="windowHeight">Height of the render window.</param>
-		public Camera(int windowX, int windowY, int windowWidth, int windowHeight) {
-			_renderTarget = new Window (windowX, windowY, windowWidth, windowHeight, this);
+		public Camera(int windowX, int windowY, int windowWidth, int windowHeight)
+		{
+			_renderTarget = new Window(windowX, windowY, windowWidth, windowHeight, this);
 			game.OnAfterRender += _renderTarget.RenderWindow;
 		}
 
-		protected override void OnDestroy() {
+		protected override void OnDestroy()
+		{
 			game.OnAfterRender -= _renderTarget.RenderWindow;
 		}
 	}

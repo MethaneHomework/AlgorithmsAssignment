@@ -1,5 +1,5 @@
-using System;
 using GXPEngine.Core;
+using System;
 
 namespace GXPEngine
 {
@@ -11,10 +11,10 @@ namespace GXPEngine
 		protected Texture2D _texture;
 		protected Rectangle _bounds;
 		protected float[] _uvs;
-		
+
 		private uint _color = 0xFFFFFF;
 		private float _alpha = 1.0f;
-		
+
 		protected bool _mirrorX = false;
 		protected bool _mirrorY = false;
 
@@ -27,7 +27,7 @@ namespace GXPEngine
 		/// <param name='bitmap'>
 		/// Bitmap.
 		/// </param>
-		public Sprite (System.Drawing.Bitmap bitmap)
+		public Sprite(System.Drawing.Bitmap bitmap)
 		{
 			name = "BMP" + bitmap.Width + "x" + bitmap.Height;
 			initializeFromTexture(new Texture2D(bitmap));
@@ -36,7 +36,8 @@ namespace GXPEngine
 		//------------------------------------------------------------------------------------------------------------------------
 		//														OnDestroy()
 		//------------------------------------------------------------------------------------------------------------------------
-		protected override void OnDestroy() {
+		protected override void OnDestroy()
+		{
 			if (_texture != null) _texture.Dispose();
 		}
 
@@ -52,7 +53,7 @@ namespace GXPEngine
 		/// <param name='filename'>
 		/// The name of the file that should be loaded.
 		/// </param>
-		public Sprite (string filename, bool keepInCache=false)
+		public Sprite(string filename, bool keepInCache = false)
 		{
 			name = filename;
 			initializeFromTexture(Texture2D.GetInstance(filename, keepInCache));
@@ -61,7 +62,8 @@ namespace GXPEngine
 		//------------------------------------------------------------------------------------------------------------------------
 		//														initializeFromTexture()
 		//------------------------------------------------------------------------------------------------------------------------
-		protected void initializeFromTexture (Texture2D texture) {
+		protected void initializeFromTexture(Texture2D texture)
+		{
 			_texture = texture;
 			_bounds = new Rectangle(0, 0, _texture.width, _texture.height);
 			setUVs();
@@ -70,11 +72,12 @@ namespace GXPEngine
 		//------------------------------------------------------------------------------------------------------------------------
 		//														setUVs
 		//------------------------------------------------------------------------------------------------------------------------
-		protected virtual void setUVs() {
-			float left = _mirrorX?1.0f:0.0f;
-			float right = _mirrorX?0.0f:1.0f;
-			float top = _mirrorY?1.0f:0.0f;
-			float bottom = _mirrorY?0.0f:1.0f;
+		protected virtual void setUVs()
+		{
+			float left = _mirrorX ? 1.0f : 0.0f;
+			float right = _mirrorX ? 0.0f : 1.0f;
+			float top = _mirrorY ? 1.0f : 0.0f;
+			float bottom = _mirrorY ? 0.0f : 1.0f;
 			_uvs = new float[8] { left, top, right, top, right, bottom, left, bottom };
 		}
 
@@ -86,8 +89,9 @@ namespace GXPEngine
 		//------------------------------------------------------------------------------------------------------------------------
 		//														createCollider
 		//------------------------------------------------------------------------------------------------------------------------
-		protected override Collider createCollider() {
-			return new BoxCollider (this);
+		protected override Collider createCollider()
+		{
+			return new BoxCollider(this);
 		}
 
 		//------------------------------------------------------------------------------------------------------------------------
@@ -98,38 +102,45 @@ namespace GXPEngine
 		/// If no texture is used, null will be returned.
 		/// Use this to retreive the original width/height or filename of the texture.
 		/// </summary>
-		public Texture2D texture {
+		public Texture2D texture
+		{
 			get { return _texture; }
 		}
-		
+
 		//------------------------------------------------------------------------------------------------------------------------
 		//														width
 		//------------------------------------------------------------------------------------------------------------------------
 		/// <summary>
 		/// Gets or sets the sprite's width in pixels.
 		/// </summary>
-		virtual public int width {
-			get { 
+		virtual public int width
+		{
+			get
+			{
 				if (_texture != null) return (int)Math.Abs(_texture.width * _scaleX);
 				return 0;
 			}
-			set {
+			set
+			{
 				if (_texture != null && _texture.width != 0) scaleX = value / ((float)_texture.width);
 			}
 		}
-		
+
 		//------------------------------------------------------------------------------------------------------------------------
 		//														height
 		//------------------------------------------------------------------------------------------------------------------------
 		/// <summary>
 		/// Gets or sets the sprite's height in pixels.
 		/// </summary>
-		virtual public int height {
-			get { 
+		virtual public int height
+		{
+			get
+			{
 				if (_texture != null) return (int)Math.Abs(_texture.height * _scaleY);
 				return 0;
 			}
-			set {
+			set
+			{
 				if (_texture != null && _texture.height != 0) scaleY = value / ((float)_texture.height);
 			}
 		}
@@ -137,27 +148,31 @@ namespace GXPEngine
 		//------------------------------------------------------------------------------------------------------------------------
 		//														RenderSelf()
 		//------------------------------------------------------------------------------------------------------------------------
-		override protected void RenderSelf(GLContext glContext) {
-			if (game != null) {
+		override protected void RenderSelf(GLContext glContext)
+		{
+			if (game != null)
+			{
 				Vector2[] bounds = GetExtents();
 				float maxX = float.MinValue;
 				float maxY = float.MinValue;
 				float minX = float.MaxValue;
 				float minY = float.MaxValue;
-				for (int i=0; i<4; i++) {
+				for (int i = 0; i < 4; i++)
+				{
 					if (bounds[i].x > maxX) maxX = bounds[i].x;
 					if (bounds[i].x < minX) minX = bounds[i].x;
 					if (bounds[i].y > maxY) maxY = bounds[i].y;
 					if (bounds[i].y < minY) minY = bounds[i].y;
 				}
 				bool test = (maxX < game.RenderRange.left) || (maxY < game.RenderRange.top) || (minX >= game.RenderRange.right) || (minY >= game.RenderRange.bottom);
-				if (test == false) {
-					if (blendMode != null) blendMode.enable ();
+				if (test == false)
+				{
+					if (blendMode != null) blendMode.enable();
 					_texture.Bind();
-					glContext.SetColor((byte)((_color >> 16) & 0xFF), 
-					                   (byte)((_color >> 8) & 0xFF), 
-					                   (byte)(_color & 0xFF), 
-					                   (byte)(_alpha * 0xFF));
+					glContext.SetColor((byte)((_color >> 16) & 0xFF),
+									   (byte)((_color >> 8) & 0xFF),
+									   (byte)(_color & 0xFF),
+									   (byte)(_alpha * 0xFF));
 					glContext.DrawQuad(GetArea(), _uvs);
 					glContext.SetColor(1, 1, 1, 1);
 					_texture.Unbind();
@@ -165,11 +180,12 @@ namespace GXPEngine
 				}
 			}
 		}
-		
+
 		//------------------------------------------------------------------------------------------------------------------------
 		//														GetArea()
 		//------------------------------------------------------------------------------------------------------------------------
-		internal float[] GetArea() {
+		internal float[] GetArea()
+		{
 			return new float[8] {
 				_bounds.left, _bounds.top,
 				_bounds.right, _bounds.top,
@@ -177,7 +193,7 @@ namespace GXPEngine
 				_bounds.left, _bounds.bottom
 			};
 		}
-		
+
 		//------------------------------------------------------------------------------------------------------------------------
 		//														GetExtents()
 		//------------------------------------------------------------------------------------------------------------------------
@@ -187,15 +203,16 @@ namespace GXPEngine
 		/// <returns>
 		/// The extents.
 		/// </returns>
-		public Vector2[] GetExtents() {
+		public Vector2[] GetExtents()
+		{
 			Vector2[] ret = new Vector2[4];
 			ret[0] = TransformPoint(_bounds.left, _bounds.top);
 			ret[1] = TransformPoint(_bounds.right, _bounds.top);
 			ret[2] = TransformPoint(_bounds.right, _bounds.bottom);
 			ret[3] = TransformPoint(_bounds.left, _bounds.bottom);
-			return ret;			
+			return ret;
 		}
-		
+
 		//------------------------------------------------------------------------------------------------------------------------
 		//														SetOrigin()
 		//------------------------------------------------------------------------------------------------------------------------
@@ -208,11 +225,12 @@ namespace GXPEngine
 		/// <param name='y'>
 		/// The y coordinate.
 		/// </param>
-		public void SetOrigin(float x, float y) {
+		public void SetOrigin(float x, float y)
+		{
 			_bounds.x = -x;
 			_bounds.y = -y;
 		}
-		
+
 		//------------------------------------------------------------------------------------------------------------------------
 		//														Mirror
 		//------------------------------------------------------------------------------------------------------------------------
@@ -225,12 +243,13 @@ namespace GXPEngine
 		/// <param name='mirrorY'>
 		/// If set to <c>true</c> to enable mirroring in y direction.
 		/// </param>
-		public void Mirror(bool mirrorX, bool mirrorY) {
+		public void Mirror(bool mirrorX, bool mirrorY)
+		{
 			_mirrorX = mirrorX;
 			_mirrorY = mirrorY;
 			setUVs();
 		}
-				
+
 		//------------------------------------------------------------------------------------------------------------------------
 		//														color
 		//------------------------------------------------------------------------------------------------------------------------
@@ -238,7 +257,8 @@ namespace GXPEngine
 		/// Gets or sets the color filter for this sprite.
 		/// This can be any value between 0x000000 and 0xFFFFFF.
 		/// </summary>
-		public uint color {
+		public uint color
+		{
 			get { return _color; }
 			set { _color = value & 0xFFFFFF; }
 		}
@@ -258,7 +278,8 @@ namespace GXPEngine
 		/// <param name='b'>
 		/// The blue component, range 0..1
 		/// </param>
-		public void SetColor(float r, float g, float b) {
+		public void SetColor(float r, float g, float b)
+		{
 			r = Mathf.Clamp(r, 0, 1);
 			g = Mathf.Clamp(g, 0, 1);
 			b = Mathf.Clamp(b, 0, 1);
@@ -267,7 +288,7 @@ namespace GXPEngine
 			byte rb = (byte)Math.Floor((b * 255));
 			color = (uint)rb + (uint)(rg << 8) + (uint)(rr << 16);
 		}
-		
+
 		//------------------------------------------------------------------------------------------------------------------------
 		//														alpha
 		//------------------------------------------------------------------------------------------------------------------------
@@ -276,7 +297,8 @@ namespace GXPEngine
 		/// Setting this value allows you to make the sprite (semi-)transparent.
 		/// The alpha value should be in the range 0...1, where 0 is fully transparent and 1 is fully opaque.
 		/// </summary>
-		public float alpha {
+		public float alpha
+		{
 			get { return _alpha; }
 			set { _alpha = value; }
 		}

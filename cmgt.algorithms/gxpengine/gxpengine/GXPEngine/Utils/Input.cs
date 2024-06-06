@@ -1,4 +1,3 @@
-using System;
 using GXPEngine.Core;
 
 namespace GXPEngine
@@ -14,30 +13,33 @@ namespace GXPEngine
 		/// <param name='key'>
 		/// Key number, use Key.KEYNAME or integer value.
 		/// </param>
-		public static bool GetKey(int key) {
+		public static bool GetKey(int key)
+		{
 			return GLContext.GetKey(key);
 		}
-		
+
 		/// <summary>
 		/// Returns 'true' if specified key was pressed down during the current frame
 		/// </summary>
 		/// <param name='key'>
 		/// Key number, use Key.KEYNAME or integer value.
 		/// </param>
-		public static bool GetKeyDown(int key) {
+		public static bool GetKeyDown(int key)
+		{
 			return GLContext.GetKeyDown(key);
 		}
-		
+
 		/// <summary>
 		/// Returns 'true' if specified key was released during the current frame
 		/// </summary>
 		/// <param name='key'>
 		/// Key number, use Key.KEYNAME or integer value.
 		/// </param>
-		public static bool GetKeyUp(int key) {
+		public static bool GetKeyUp(int key)
+		{
 			return GLContext.GetKeyUp(key);
 		}
-		
+
 		/// <summary>
 		/// Returns 'true' if mousebutton is down, else returns 'false'
 		/// </summary>
@@ -47,10 +49,11 @@ namespace GXPEngine
 		/// 1 = right button
 		/// 2 = middle button
 		/// </param>
-		public static bool GetMouseButton(int button) {
+		public static bool GetMouseButton(int button)
+		{
 			return GLContext.GetMouseButton(button);
 		}
-		
+
 		/// <summary>
 		/// Returns 'true' if specified mousebutton was pressed down during the current frame
 		/// </summary>
@@ -60,7 +63,8 @@ namespace GXPEngine
 		/// 1 = right button
 		/// 2 = middle button
 		/// </param>
-		public static bool GetMouseButtonDown(int button) {
+		public static bool GetMouseButtonDown(int button)
+		{
 			return GLContext.GetMouseButtonDown(button);
 		}
 
@@ -77,18 +81,20 @@ namespace GXPEngine
 		{
 			return GLContext.GetMouseButtonUp(button); /*courtesy of LeonB*/
 		}
-		
+
 		/// <summary>
 		/// Gets the current mouse x position in pixels.
 		/// </summary>
-		public static int mouseX {
+		public static int mouseX
+		{
 			get { return GLContext.mouseX; }
 		}
-		
+
 		/// <summary>
 		/// Gets the current mouse y position in pixels.
 		/// </summary>
-		public static int mouseY {
+		public static int mouseY
+		{
 			get { return GLContext.mouseY; }
 		}
 	}

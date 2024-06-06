@@ -1,6 +1,6 @@
 using System;
-using System.Reflection;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace GXPEngine
 {
@@ -9,48 +9,56 @@ namespace GXPEngine
 	//------------------------------------------------------------------------------------------------------------------------
 	public class CollisionManager
 	{
-		
+
 		private delegate void CollisionDelegate(GameObject gameObject);
-		
+
 		//------------------------------------------------------------------------------------------------------------------------
 		//														ColliderInfo
 		//------------------------------------------------------------------------------------------------------------------------
-		private struct ColliderInfo {
+		private struct ColliderInfo
+		{
 			public GameObject gameObject;
 			public CollisionDelegate onCollision;
-			
+
 			//------------------------------------------------------------------------------------------------------------------------
 			//														ColliderInfo()
 			//------------------------------------------------------------------------------------------------------------------------
-			public ColliderInfo(GameObject gameObject, CollisionDelegate onCollision) {
+			public ColliderInfo(GameObject gameObject, CollisionDelegate onCollision)
+			{
 				this.gameObject = gameObject;
 				this.onCollision = onCollision;
 			}
 		}
-	
+
 		private List<GameObject> colliderList = new List<GameObject>();
 		private List<ColliderInfo> activeColliderList = new List<ColliderInfo>();
 		private Dictionary<GameObject, ColliderInfo> _collisionReferences = new Dictionary<GameObject, ColliderInfo>();
-				
+
 		//------------------------------------------------------------------------------------------------------------------------
 		//														CollisionManager()
 		//------------------------------------------------------------------------------------------------------------------------
-		public CollisionManager ()
+		public CollisionManager()
 		{
 		}
-		
+
 		//------------------------------------------------------------------------------------------------------------------------
 		//														Step()
 		//------------------------------------------------------------------------------------------------------------------------
-		public void Step() {
-			for (int i=activeColliderList.Count-1; i>= 0; i--) {
+		public void Step()
+		{
+			for (int i = activeColliderList.Count - 1; i >= 0; i--)
+			{
 				ColliderInfo info = activeColliderList[i];
-				for (int j=colliderList.Count-1; j>=0; j--) {
+				for (int j = colliderList.Count - 1; j >= 0; j--)
+				{
 					if (j >= colliderList.Count) continue; //fix for removal in loop
 					GameObject other = colliderList[j];
-					if (info.gameObject != other) {
-						if (info.gameObject.HitTest(other)) {
-							if (info.onCollision != null) {
+					if (info.gameObject != other)
+					{
+						if (info.gameObject.HitTest(other))
+						{
+							if (info.onCollision != null)
+							{
 								info.onCollision(other);
 							}
 						}
@@ -62,71 +70,85 @@ namespace GXPEngine
 		//------------------------------------------------------------------------------------------------------------------------
 		//												 GetCurrentCollisions()
 		//------------------------------------------------------------------------------------------------------------------------
-		public GameObject[] GetCurrentCollisions (GameObject gameObject)
+		public GameObject[] GetCurrentCollisions(GameObject gameObject)
 		{
 			List<GameObject> list = new List<GameObject>();
-			for (int j=colliderList.Count-1; j>=0; j--) {
+			for (int j = colliderList.Count - 1; j >= 0; j--)
+			{
 				if (j >= colliderList.Count) continue; //fix for removal in loop
 				GameObject other = colliderList[j];
-				if (gameObject != other) {
-					if (gameObject.HitTest(other)) {
+				if (gameObject != other)
+				{
+					if (gameObject.HitTest(other))
+					{
 						list.Add(other);
 					}
 				}
 			}
 			return list.ToArray();
 		}
-		
+
 		//------------------------------------------------------------------------------------------------------------------------
 		//														Add()
 		//------------------------------------------------------------------------------------------------------------------------
-		public void Add(GameObject gameObject) {
-			if (gameObject.collider != null && !colliderList.Contains (gameObject)) {
+		public void Add(GameObject gameObject)
+		{
+			if (gameObject.collider != null && !colliderList.Contains(gameObject))
+			{
 				colliderList.Add(gameObject);
 			}
 
 			MethodInfo info = gameObject.GetType().GetMethod("OnCollision", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
 
-			if (info != null) {
+			if (info != null)
+			{
 
 				CollisionDelegate onCollision = (CollisionDelegate)Delegate.CreateDelegate(typeof(CollisionDelegate), gameObject, info, false);
-				if (onCollision != null && !_collisionReferences.ContainsKey (gameObject)) {
+				if (onCollision != null && !_collisionReferences.ContainsKey(gameObject))
+				{
 					ColliderInfo colliderInfo = new ColliderInfo(gameObject, onCollision);
 					_collisionReferences[gameObject] = colliderInfo;
 					activeColliderList.Add(colliderInfo);
 				}
 
-			} else {
+			}
+			else
+			{
 				validateCase(gameObject);
 			}
 		}
-		
+
 		//------------------------------------------------------------------------------------------------------------------------
 		//														validateCase()
 		//------------------------------------------------------------------------------------------------------------------------
-		private void validateCase(GameObject gameObject) {
+		private void validateCase(GameObject gameObject)
+		{
 			MethodInfo info = gameObject.GetType().GetMethod("OnCollision", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
-			if (info != null) {
+			if (info != null)
+			{
 				throw new Exception("'OnCollision' function was not binded. Please check its case (capital O?)");
 			}
 		}
-		
+
 		//------------------------------------------------------------------------------------------------------------------------
 		//														Remove()
 		//------------------------------------------------------------------------------------------------------------------------
-		public void Remove(GameObject gameObject) {
+		public void Remove(GameObject gameObject)
+		{
 			colliderList.Remove(gameObject);
-			if (_collisionReferences.ContainsKey(gameObject)) {
+			if (_collisionReferences.ContainsKey(gameObject))
+			{
 				ColliderInfo colliderInfo = _collisionReferences[gameObject];
 				activeColliderList.Remove(colliderInfo);
 				_collisionReferences.Remove(gameObject);
 			}
 		}
 
-		public string GetDiagnostics() {
+		public string GetDiagnostics()
+		{
 			string output = "";
-			output += "Number of colliders: " + colliderList.Count+'\n';
-			output += "Number of active colliders: " + activeColliderList.Count+'\n';
+			output += "Number of colliders: " + colliderList.Count + '\n';
+			output += "Number of active colliders: " + activeColliderList.Count + '\n';
 			return output;
 		}
 	}

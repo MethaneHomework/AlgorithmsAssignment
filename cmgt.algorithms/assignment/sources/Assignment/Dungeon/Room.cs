@@ -7,7 +7,7 @@ class Room
 {
 	public Rectangle area;
 
-	public Room (Rectangle pArea)
+	public Room(Rectangle pArea)
 	{
 		area = pArea;
 	}

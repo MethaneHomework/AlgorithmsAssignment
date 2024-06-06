@@ -14,14 +14,14 @@ class SampleDungeonNodeGraph : NodeGraph
 {
 	protected Dungeon _dungeon;
 
-	public SampleDungeonNodeGraph(Dungeon pDungeon) : base((int)(pDungeon.size.Width * pDungeon.scale), (int)(pDungeon.size.Height * pDungeon.scale), (int)pDungeon.scale/3)
+	public SampleDungeonNodeGraph(Dungeon pDungeon) : base((int)(pDungeon.size.Width * pDungeon.scale), (int)(pDungeon.size.Height * pDungeon.scale), (int)pDungeon.scale / 3)
 	{
 		Debug.Assert(pDungeon != null, "Please pass in a dungeon.");
 
 		_dungeon = pDungeon;
 	}
 
-	protected override void generate ()
+	protected override void generate()
 	{
 		//Generate nodes, in this sample node graph we just add to nodes manually
 		//of course in a REAL nodegraph (read:yours), node placement should 

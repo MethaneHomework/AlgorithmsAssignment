@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using System.Collections.Generic;
 
 namespace GXPEngine
@@ -11,10 +10,10 @@ namespace GXPEngine
 	public class Sound
 	{
 		private static int _system = 0;
-		private static Dictionary<string,int> _soundCache = new Dictionary<string, int> ();
-		
+		private static Dictionary<string, int> _soundCache = new Dictionary<string, int>();
+
 		private int _id;
-		
+
 		/// <summary>
 		/// Creates a new <see cref="GXPEngine.Sound"/>.
 		/// This class represents a sound file.
@@ -33,42 +32,51 @@ namespace GXPEngine
 		/// <param name='cached'>
 		/// If set to <c>true</c>, the sound will be stored in cache, preserving memory when creating the same sound multiple times.
 		/// </param>
-		public Sound( String filename, bool looping = false, bool streaming = false)
+		public Sound(String filename, bool looping = false, bool streaming = false)
 		{
-			if ( _system == 0 ) { // if fmod not initialized, create system and init default
-				FMOD.System_Create( out _system );
-				FMOD.System_Init( _system, 32, 0, 0 );
+			if (_system == 0)
+			{ // if fmod not initialized, create system and init default
+				FMOD.System_Create(out _system);
+				FMOD.System_Init(_system, 32, 0, 0);
 			}
 			uint loop = FMOD.FMOD_LOOP_OFF; // no loop
-			if ( looping ) loop = FMOD.FMOD_LOOP_NORMAL;
-			if ( streaming ) {
-				FMOD.System_CreateStream( _system, filename, loop, 0, out _id );	
-				if (_id == 0) {
-					throw new Exception ("Sound file not found: " + filename);
+			if (looping) loop = FMOD.FMOD_LOOP_NORMAL;
+			if (streaming)
+			{
+				FMOD.System_CreateStream(_system, filename, loop, 0, out _id);
+				if (_id == 0)
+				{
+					throw new Exception("Sound file not found: " + filename);
 				}
-			} else {
-				if (_soundCache.ContainsKey (filename)) {
-					_id = _soundCache [filename];
-				} else {
-					FMOD.System_CreateSound (_system, filename, loop, 0, out _id);
-					if (_id == 0) {
-						throw new Exception ("Sound file not found: " + filename);
+			}
+			else
+			{
+				if (_soundCache.ContainsKey(filename))
+				{
+					_id = _soundCache[filename];
+				}
+				else
+				{
+					FMOD.System_CreateSound(_system, filename, loop, 0, out _id);
+					if (_id == 0)
+					{
+						throw new Exception("Sound file not found: " + filename);
 					}
-					_soundCache [filename] = _id;
+					_soundCache[filename] = _id;
 				}
 			}
 		}
-		
+
 		~Sound()
 		{
 		}
 
-		internal static void Step() 
+		internal static void Step()
 		{
 			//if (_system != 0) 
 			FMOD.System_Update(_system);
 		}
-		
+
 		/// <summary>
 		/// Play the specified paused and return the newly created SoundChannel
 		/// </summary>
@@ -82,13 +90,13 @@ namespace GXPEngine
 		/// When set to -1 (the default), the next free channel will be used.
 		/// However, when all channels are in use, Sound.Play will silently fail.
 		/// </param>
-		public SoundChannel Play( bool paused = false, int channelId = -1 )
+		public SoundChannel Play(bool paused = false, int channelId = -1)
 		{
 			int id = 0;
-			FMOD.System_PlaySound( _system, channelId, _id, paused, ref id );
-			SoundChannel soundChannel = new SoundChannel( id );
+			FMOD.System_PlaySound(_system, channelId, _id, paused, ref id);
+			SoundChannel soundChannel = new SoundChannel(id);
 			return soundChannel;
 		}
-		
+
 	}
 }

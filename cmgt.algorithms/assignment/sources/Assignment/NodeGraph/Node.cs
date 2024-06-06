@@ -33,7 +33,7 @@ class Node
 		location = pLocation;
 
 		//use an autoincrementing id as label
-		id = ""+lastID++;
+		id = "" + lastID++;
 		System.Console.WriteLine(id);
 	}
 

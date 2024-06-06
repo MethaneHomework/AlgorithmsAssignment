@@ -21,7 +21,8 @@ abstract class TiledView : GameObject
 	//single sprite, used for rendering all tiles
 	private AnimationSprite _tileSet;
 
-	public TiledView(int pColumns, int pRows, int pTileSize, TileType pDefaultTileType) {
+	public TiledView(int pColumns, int pRows, int pTileSize, TileType pDefaultTileType)
+	{
 		Debug.Assert(pColumns > 0, "Invalid amount of columns passed in: " + pColumns);
 		Debug.Assert(pRows > 0, "Invalid amount of rows passed in: " + pRows);
 		Debug.Assert(pDefaultTileType != null, "Invalid default tile type passed in:" + pDefaultTileType);
@@ -38,7 +39,7 @@ abstract class TiledView : GameObject
 		initializeTiles();
 	}
 
-	private void initializeTiles ()
+	private void initializeTiles()
 	{
 		//initialize all tiles to walkable
 		_tileData = new TileType[columns, rows];

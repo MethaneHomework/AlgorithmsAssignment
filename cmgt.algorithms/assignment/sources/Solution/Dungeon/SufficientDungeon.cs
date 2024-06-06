@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static GXPEngine.Mathf;
 
 internal class SufficientDungeon : Dungeon
 {
@@ -12,7 +7,7 @@ internal class SufficientDungeon : Dungeon
 
 	public BSPNode RootNode;
 
-	public SufficientDungeon(Size pSize) : base(pSize) 
+	public SufficientDungeon(Size pSize) : base(pSize)
 	{
 		rng = new Random();
 	}
@@ -51,7 +46,7 @@ internal class SufficientDungeon : Dungeon
 					doorX = rng.Next(a.Bounds.Left, a.Bounds.Right);
 					doorY = a.Bounds.Bottom;
 					doorLoc = new Point(doorX, doorY);
-					
+
 					valid = RootNode.FindPoint(new Point(doorX, doorY - 1)) != null && RootNode.FindPoint(new Point(doorX, doorY + 1)) != null;
 				}
 				else
@@ -64,7 +59,7 @@ internal class SufficientDungeon : Dungeon
 					valid = RootNode.FindPoint(new Point(doorX - 1, doorY)) != null && RootNode.FindPoint(new Point(doorX + 1, doorY)) != null;
 				}
 			}
-			
+
 			Console.WriteLine("Adding door at {0}", doorLoc);
 			doors.Add(new Door(doorLoc));
 		}

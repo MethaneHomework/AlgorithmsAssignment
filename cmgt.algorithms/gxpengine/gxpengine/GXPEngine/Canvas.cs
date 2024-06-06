@@ -1,6 +1,6 @@
+using GXPEngine.Core;
 using System;
 using System.Drawing;
-using GXPEngine.Core;
 
 namespace GXPEngine
 {
@@ -27,18 +27,18 @@ namespace GXPEngine
 		/// <param name='height'>
 		/// Height of the canvas in pixels.
 		/// </param>
-		public Canvas (int width, int height) : this(new Bitmap (width, height))
+		public Canvas(int width, int height) : this(new Bitmap(width, height))
 		{
 			name = width + "x" + height;
 		}
 
-		public Canvas (System.Drawing.Bitmap bitmap) : base (bitmap)
+		public Canvas(System.Drawing.Bitmap bitmap) : base(bitmap)
 		{
 			_graphics = Graphics.FromImage(bitmap);
 			_invalidate = true;
 		}
 
-		public Canvas(string filename):base(filename)
+		public Canvas(string filename) : base(filename)
 		{
 			_graphics = Graphics.FromImage(texture.bitmap);
 			_invalidate = true;
@@ -52,23 +52,27 @@ namespace GXPEngine
 		/// Returns the graphics component. This interface provides tools to draw on the sprite.
 		/// See: <a href="http://msdn.microsoft.com/en-us/library/system.drawing.graphics(v=vs.110).aspx">System.Drawing.Graphics</a>
 		/// </summary>
-		public Graphics graphics {
-			get { 
+		public Graphics graphics
+		{
+			get
+			{
 				_invalidate = true;
-				return _graphics; 
+				return _graphics;
 			}
 		}
 
 		//------------------------------------------------------------------------------------------------------------------------
 		//														Render()
 		//------------------------------------------------------------------------------------------------------------------------
-		override protected void RenderSelf(GLContext glContext) {
-			if (_invalidate) {
-				_texture.UpdateGLTexture ();
+		override protected void RenderSelf(GLContext glContext)
+		{
+			if (_invalidate)
+			{
+				_texture.UpdateGLTexture();
 				_invalidate = false;
 			}
 
-			base.RenderSelf (glContext);
+			base.RenderSelf(glContext);
 		}
 
 		//------------------------------------------------------------------------------------------------------------------------
@@ -82,7 +86,8 @@ namespace GXPEngine
 		/// The Sprite that should be drawn.
 		/// </param>
 		private PointF[] destPoints = new PointF[3];
-		public void DrawSprite(Sprite sprite) {
+		public void DrawSprite(Sprite sprite)
+		{
 			float halfWidth = sprite.texture.width / 2.0f;
 			float halfHeight = sprite.texture.height / 2.0f;
 			Vector2 p0 = sprite.TransformPoint(-halfWidth, -halfHeight);
@@ -112,9 +117,10 @@ namespace GXPEngine
 
 
 		// Called by the garbage collector
-		~Canvas() {
+		~Canvas()
+		{
 			_graphics.Dispose();
-			
+
 		}
 	}
 }

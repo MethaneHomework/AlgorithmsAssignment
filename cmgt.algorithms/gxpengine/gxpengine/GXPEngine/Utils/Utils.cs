@@ -8,7 +8,7 @@ namespace GXPEngine
 	public static class Utils
 	{
 		static private Random random = new Random();
-		
+
 		//------------------------------------------------------------------------------------------------------------------------
 		//														CalculateFrameRate()
 		//------------------------------------------------------------------------------------------------------------------------
@@ -16,12 +16,14 @@ namespace GXPEngine
 		/// Returns the current frame rate in frames per second.
 		/// Deprecated use game.fps instead!
 		/// </summary>
-		public static int frameRate {
-			get {
+		public static int frameRate
+		{
+			get
+			{
 				return Game.main.currentFps;
 			}
-		}		
-		
+		}
+
 		//------------------------------------------------------------------------------------------------------------------------
 		//														Random()
 		//------------------------------------------------------------------------------------------------------------------------
@@ -35,10 +37,12 @@ namespace GXPEngine
 		/// <param name='max'>
 		/// Exclusive maximum value: the returned value will be smaller than this value.
 		/// </param>
-		public static int Random (int min, int max) {
+		public static int Random(int min, int max)
+		{
 			return random.Next(min, max);
 		}
-		public static float Random (float min, float max) {
+		public static float Random(float min, float max)
+		{
 			return (float)(random.NextDouble() * (max - min) + min);
 		}
 
@@ -50,13 +54,15 @@ namespace GXPEngine
 		/// Shows output on the console window.
 		/// Basically, a shortcut for Console.WriteLine() that allows for multiple parameters.
 		/// </summary>
-		public static void print(params object[] list) {
-			for (int i = 0; i < list.Length; i++) {
+		public static void print(params object[] list)
+		{
+			for (int i = 0; i < list.Length; i++)
+			{
 				if (list[i] != null) Console.Write(list[i].ToString() + " "); else Console.Write("null ");
 			}
 			Console.WriteLine();
 		}
-		
+
 		//------------------------------------------------------------------------------------------------------------------------
 		//														RectsOverlap()
 		//------------------------------------------------------------------------------------------------------------------------
@@ -88,7 +94,8 @@ namespace GXPEngine
 		/// The height of the second rectangle.
 		/// </param>
 		public static bool RectsOverlap(float x1, float y1, float width1, float height1,
-		                                float x2, float y2, float width2, float height2) {
+										float x2, float y2, float width2, float height2)
+		{
 			if (x1 > x2 + width2) return false;
 			if (y1 > y2 + height2) return false;
 			if (x2 > x1 + width1) return false;

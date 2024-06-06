@@ -1,5 +1,5 @@
-﻿using System;
-using GXPEngine.OpenGL;
+﻿using GXPEngine.OpenGL;
+using System;
 
 namespace GXPEngine
 {
@@ -9,12 +9,12 @@ namespace GXPEngine
 	public class BlendMode
 	{
 
-		public static readonly BlendMode NORMAL = new BlendMode (
-			"Normal", () => {	GL.BlendFunc(GL.SRC_ALPHA, GL.ONE_MINUS_SRC_ALPHA);	}
+		public static readonly BlendMode NORMAL = new BlendMode(
+			"Normal", () => { GL.BlendFunc(GL.SRC_ALPHA, GL.ONE_MINUS_SRC_ALPHA); }
 		);
 
-		public static readonly BlendMode MULTIPLY = new BlendMode (
-			"Multiply", () => {	GL.BlendFunc(GL.DST_COLOR, GL.ZERO);	}
+		public static readonly BlendMode MULTIPLY = new BlendMode(
+			"Multiply", () => { GL.BlendFunc(GL.DST_COLOR, GL.ZERO); }
 		);
 
 		public delegate void Action();
@@ -29,18 +29,21 @@ namespace GXPEngine
 		/// </summary>
 		public readonly string label;
 
-		public BlendMode (string pLabel, Action pEnable)
+		public BlendMode(string pLabel, Action pEnable)
 		{
-			if (pEnable == null) {
-				throw new Exception ("Enabled action cannot be null");
-			} else {
+			if (pEnable == null)
+			{
+				throw new Exception("Enabled action cannot be null");
+			}
+			else
+			{
 				enable = pEnable;
 			}
 
 			label = pLabel;
 		}
 
-		public override string ToString ()
+		public override string ToString()
 		{
 			return label;
 		}

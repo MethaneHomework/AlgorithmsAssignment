@@ -1,8 +1,8 @@
+using GXPEngine;
+using GXPEngine.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using GXPEngine;
-using GXPEngine.OpenGL;
 
 /**
  * This is the main 'game' for the Algorithms Assignment that accompanies the Algorithms course.
@@ -30,8 +30,8 @@ class AlgorithmsAssignment : Game
 	PathFinder _pathFinder = null;
 
 	//common settings
-	private const int SCALE = 16;				// Done: experiment with changing this
-	private const int MIN_ROOM_SIZE = 7;		// Done: use this setting in your dungeon generator
+	private const int SCALE = 16;               // Done: experiment with changing this
+	private const int MIN_ROOM_SIZE = 7;        // Done: use this setting in your dungeon generator
 
 	public AlgorithmsAssignment() : base(1200, 800, false, true, -1, -1, false)
 	{
@@ -163,13 +163,13 @@ class AlgorithmsAssignment : Game
 
 	private void Update()
 	{
-        if (Input.GetKeyDown(Key.R))
-        {
+		if (Input.GetKeyDown(Key.R))
+		{
 			ClearChildren();
 			Console.Clear();
 			InitializeDungeon();
-        }
-    }
+		}
+	}
 
 	private void ClearChildren()
 	{
