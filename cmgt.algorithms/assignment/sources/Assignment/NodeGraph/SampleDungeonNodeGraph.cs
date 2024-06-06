@@ -23,9 +23,9 @@ class SampleDungeonNodeGraph : NodeGraph
 
 	protected override void generate()
 	{
-		//Generate nodes, in this sample node graph we just add to nodes manually
-		//of course in a REAL nodegraph (read:yours), node placement should 
-		//be based on the rooms in the dungeon
+		// Generate nodes, in this sample node graph we just add to nodes manually
+		// of course in a REAL nodegraph (read:yours), node placement should 
+		// be based on the rooms in the dungeon
 
 		//We assume (bad programming practice 1-o-1) there are two rooms in the given dungeon.
 		//The getRoomCenter is a convenience method to calculate the screen space center of a room

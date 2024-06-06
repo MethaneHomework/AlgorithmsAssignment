@@ -77,13 +77,13 @@ class AlgorithmsAssignment : Game
 		///////////////////////////////////////
 		// Assignment 1.1 Sufficient (Mandatory)
 		// 
-		// TODO: Create SufficientDungeon class
-		// TODO: Create GoodDungeon class
+		// DONE: Create SufficientDungeon class
+		// DONE: Create GoodDungeon class
 		// TODO: Create ExcellentDungeon class
 
 		//_dungeon = new SampleDungeon(_size);
-		_dungeon = new SufficientDungeon(_size);
-		//_dungeon = new GoodDungeon(_size);
+		//_dungeon = new SufficientDungeon(_size);
+		_dungeon = new GoodDungeon(_size);
 		//_dungeon = new ExcellentDungeon(_size);
 
 		if (_dungeon != null)
@@ -115,7 +115,7 @@ class AlgorithmsAssignment : Game
 		//
 
 		//_graph = new SampleDungeonNodeGraph(_dungeon);
-		//_graph = new HighLevelDungeonNodeGraph(_dungeon);
+		_graph = new HighLevelDungeonNodeGraph(_dungeon);
 		//_graph = new LowLevelDungeonNodeGraph(_dungeon);
 		_graph?.Generate();
 

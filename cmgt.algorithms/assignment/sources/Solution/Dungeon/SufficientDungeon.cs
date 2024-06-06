@@ -42,7 +42,7 @@ internal class SufficientDungeon : Dungeon
 		}
 	}
 
-	private void GenerateDoor(BSPNode a, BSPNode b)
+	protected virtual void GenerateDoor(BSPNode a, BSPNode b)
 	{
 		int doorX;
 		int doorY;
