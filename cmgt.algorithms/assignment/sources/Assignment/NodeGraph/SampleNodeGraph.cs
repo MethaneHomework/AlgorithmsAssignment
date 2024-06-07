@@ -10,11 +10,11 @@ using System.Drawing;
 // have access to the helper methods such as getRoomCenter etc.
 // 
 // TODO: Create a subclass of this class, and override the generate method, see the generate method below for an example.
-class SampleDungeonNodeGraph : NodeGraph
+class SampleNodeGraph : NodeGraph
 {
 	protected Dungeon _dungeon;
 
-	public SampleDungeonNodeGraph(Dungeon pDungeon) : base((int)(pDungeon.size.Width * pDungeon.scale), (int)(pDungeon.size.Height * pDungeon.scale), (int)pDungeon.scale / 3)
+	public SampleNodeGraph(Dungeon pDungeon) : base((int)(pDungeon.size.Width * pDungeon.scale), (int)(pDungeon.size.Height * pDungeon.scale), (int)pDungeon.scale / 3)
 	{
 		Debug.Assert(pDungeon != null, "Please pass in a dungeon.");
 

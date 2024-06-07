@@ -6,7 +6,7 @@
  */
 class Door
 {
-	public readonly Point location;
+	public Point location;
 	private static int lastID = 0;
 	public readonly int ID;
 

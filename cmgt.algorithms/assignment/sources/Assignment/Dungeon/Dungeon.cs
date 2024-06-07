@@ -27,8 +27,8 @@ abstract class Dungeon : Canvas
 
 	// The colors for the walls and doors
 	// NOTE: Try changing 255 to 128 to see where the room boundaries are...
-	private Pen wallPen = new Pen(Color.FromArgb(255, Color.Black));
-	private Pen doorPen = Pens.White;
+	protected readonly Pen wallPen = new Pen(Color.FromArgb(255, Color.Black));
+	protected readonly Pen doorPen = Pens.White;
 
 	// Create empty dungeon instance of the specified size.
 	// It's empty because it doesn't contain any rooms yet.

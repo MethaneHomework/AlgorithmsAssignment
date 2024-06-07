@@ -47,6 +47,7 @@ internal class SufficientDungeon : Dungeon
 		int doorX;
 		int doorY;
 		bool valid = false;
+		bool horizontal = false;
 		Point doorLoc = new Point();
 
 		Room connectedA = null;
@@ -69,6 +70,8 @@ internal class SufficientDungeon : Dungeon
 
 				connectedA = sideA.Room;
 				connectedB = sideB.Room;
+
+				horizontal = false;
 			}
 			else
 			{
@@ -85,6 +88,8 @@ internal class SufficientDungeon : Dungeon
 
 				connectedA = sideA.Room;
 				connectedB = sideB.Room;
+
+				horizontal = true;
 			}
 		}
 
@@ -92,6 +97,7 @@ internal class SufficientDungeon : Dungeon
 		{
 			roomA = connectedA,
 			roomB = connectedB,
+			horizontal = horizontal,
 		};
 
 		connectedA.doors.Add(door);

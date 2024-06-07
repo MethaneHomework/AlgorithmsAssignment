@@ -7,13 +7,16 @@ using System.Threading.Tasks;
 
 internal class GoodDungeon : SufficientDungeon
 {
+	public bool RemoveMinMax = true;
+	public bool ConnectionCountColor = true;
+
 	public GoodDungeon(Size pSize) : base(pSize) { }
 
 	protected override void generate(int pMinimumRoomSize)
 	{
 		base.generate(pMinimumRoomSize);
 
-		RemoveMinMaxRooms();
+		if (RemoveMinMax) RemoveMinMaxRooms();
 	}
 
 	private void RemoveMinMaxRooms()
@@ -54,6 +57,12 @@ internal class GoodDungeon : SufficientDungeon
 
 	protected override void drawRooms(IEnumerable<Room> pRooms, Pen pWallColor, Brush pFillColor = null)
 	{
+		if (pFillColor != null)
+		{
+			base.drawRooms(pRooms, pWallColor, pFillColor);
+			return;
+		}
+
 		foreach (Room room in pRooms)
 		{
 			Brush fillColor;

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-internal class HighLevelDungeonNodeGraph : SampleDungeonNodeGraph
+internal class HighLevelNodeGraph : SampleNodeGraph
 {
-	public HighLevelDungeonNodeGraph(Dungeon dungeon) : base(dungeon)
+	public HighLevelNodeGraph(Dungeon dungeon) : base(dungeon)
 	{
 		_dungeon = dungeon;
 	}
