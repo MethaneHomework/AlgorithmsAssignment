@@ -33,7 +33,7 @@ abstract class PathFinder : Canvas
 		_nodeGraph.OnNodeShiftRightClicked += (node) => { _endNode = node; draw(); };
 
 		Console.WriteLine("\n-----------------------------------------------------------------------------");
-		Console.WriteLine(this.GetType().Name + " created.");
+		Console.WriteLine(GetType().Name + " created.");
 		Console.WriteLine("* Shift-LeftClick to set the starting node.");
 		Console.WriteLine("* Shift-RightClick to set the target node.");
 		Console.WriteLine("* G to generate the Path.");
@@ -46,7 +46,7 @@ abstract class PathFinder : Canvas
 
 	public List<Node> Generate(Node pFrom, Node pTo)
 	{
-		System.Console.WriteLine(this.GetType().Name + ".Generate: Generating path...");
+		Console.WriteLine(GetType().Name + ".Generate: Generating path...");
 
 		_lastCalculatedPath = null;
 		_startNode = pFrom;

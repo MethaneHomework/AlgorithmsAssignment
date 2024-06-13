@@ -1,16 +1,17 @@
 ﻿using GXPEngine;
 using System.Diagnostics;
 
-/**
- * NodeGraphAgent provides a starting point for your own agents that would like to navigate the nodegraph.
- * It provides convenience methods such as moveTowardsNode & jumpToNode.
- * 
- * Create a subclass of this class, override Update and call these methods as required for your specific assignment.
- * See SampleNodeGraphAgent for an example.
- */
+//
+// NodeGraphAgent provides a starting point for your own agents that would like to navigate the nodegraph.
+// It provides convenience methods such as moveTowardsNode & jumpToNode.
+// 
+// Create a subclass of this class, override Update and call these methods as required for your specific assignment.
+// See SampleNodeGraphAgent for an example.
+//
+
 abstract class NodeGraphAgent : AnimationSprite
 {
-	protected const int REGULAR_SPEED = 1;
+	protected const float REGULAR_SPEED = 0.5f;
 	protected const int FAST_TRAVEL_SPEED = 10;
 	protected const int SPEED_UP_KEY = Key.LEFT_CTRL;
 
@@ -25,13 +26,11 @@ abstract class NodeGraphAgent : AnimationSprite
 	//override in subclass to implement any functionality
 	protected abstract void Update();
 
-	/////////////////////////////////////////////////////////////////////////////////////////
-	///	Movement helper methods
-
-	/**
-	 * Moves towards the given node with either REGULAR_SPEED or FAST_TRAVEL_SPEED 
-	 * based on whether the RIGHT_CTRL key is pressed.
-	 */
+	//	============= Movement helper methods =============
+	//	
+	//	Moves towards the given node with either REGULAR_SPEED or FAST_TRAVEL_SPEED 
+	//	based on whether the RIGHT_CTRL key is pressed.
+	//	
 	protected virtual bool moveTowardsNode(Node pTarget)
 	{
 		float speed = Input.GetKey(SPEED_UP_KEY) ? FAST_TRAVEL_SPEED : REGULAR_SPEED;
@@ -60,14 +59,11 @@ abstract class NodeGraphAgent : AnimationSprite
 		}
 	}
 
-	/**
-	 * Jumps towards the given node immediately
-	 */
+	//	Jumps towards the given node immediately
 	protected virtual void jumpToNode(Node pNode)
 	{
 		x = pNode.location.X;
 		y = pNode.location.Y;
 	}
-
 }
 

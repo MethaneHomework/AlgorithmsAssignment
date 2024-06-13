@@ -82,8 +82,8 @@ class AlgorithmsAssignment : Game
 		// TODO: Create ExcellentDungeon class
 
 		//_dungeon = new SampleDungeon(_size);
-		//_dungeon = new SufficientDungeon(_size);
-		_dungeon = new GoodDungeon(_size);
+		_dungeon = new SufficientDungeon(_size);
+		//_dungeon = new GoodDungeon(_size);
 		//_dungeon = new ExcellentDungeon(_size);
 
 		if (_dungeon != null)
@@ -97,15 +97,15 @@ class AlgorithmsAssignment : Game
 		// -----------------------------------------------------------------
 		// Assignment 2.1 Sufficient (Mandatory) OnGraphWayPointAgent
 		//
-		// TODO: Implement an OnGraphWayPointAgent class
-		// TODO: Implement HighLevelDungeonNodeGraph
+		// DONE: Implement an OnGraphWayPointAgent class
+		// DONE: Implement HighLevelDungeonNodeGraph
 		//
 		// -----------------------------------------------------------------
 		//
 		// Assignment 2.2 Good (Optional) TiledView & RandomWayPointagent
 		//
 		// TODO: Implement TiledView
-		// TODO: Implement a RandomWayPointAgent class
+		// DONE: Implement a RandomWayPointAgent class
 		//
 		// -----------------------------------------------------------------
 		//
@@ -145,10 +145,10 @@ class AlgorithmsAssignment : Game
 		// PathFindingAgent below the creation of your PathFinder!
 
 		//_pathFinder = new SamplePathFinder(_graph);
-		//_pathFinder = new RecursivePathFinder(_graph);
+		_pathFinder = new RecursivePathFinder(_graph);
 		//_pathFinder = new BreadthFirstPathFinder(_graph);
 
-		//_agent = new PathFindingAgent(_graph, _pathFinder);
+		_agent = new PathFindingAgent(_graph, _pathFinder);
 
 
 		// REQUIRED BLOCK OF CODE TO ADD ALL OBJECTS YOU CREATED TO THE SCREEN IN THE CORRECT ORDER
