@@ -16,37 +16,29 @@ internal class RecursivePathFinder : PathFinder
 		return DepthFirstSearch(pFrom, pTo, 50);
 	}
 
-	private List<Node> DepthFirstSearch(Node pFrom, Node pTo, int maxDepth, Node pLastNode = null) {
-		foreach (Node node in pFrom.connections)
-		{
-			if (node == pTo)
-			{
-				// Checked connection is target, return path
-				return new List<Node>{pFrom, node};
-			}
-			else if (maxDepth > 0)
-			{
-				List<Node> pathOrNull = DepthFirstSearch(node, pTo, maxDepth - 1);
+	private List<Node> DepthFirstSearch(Node current, Node target, int maxDepth, Node last = null)
+	{
+		// If path is found, return list containing path.
+		// If no path is found return empty list
 
-				if (pathOrNull != null && pathOrNull.Count != 0)
-				{
-					// Path was found, 
-					List<Node> path = new List<Node>() { pFrom };
-					path.AddRange(pathOrNull);
-					return path;
-				}
+		if (current == target) return new List<Node>() { current };
+		if (maxDepth <= 0) return new List<Node>();
+
+		foreach (Node node in current.connections)
+		{
+			// If checked node is the previous node, skip that node.
+			if (node != null && node == last) continue;
+
+			List<Node> path = DepthFirstSearch(node, target, maxDepth - 1, current);
+			if (path.Count > 0)
+			{
+				List<Node> finalPath = new List<Node>() { current };
+				finalPath.AddRange(path);
+				return finalPath;
 			}
 		}
 
-		// Did not return in loop, no path found
 		return new List<Node>();
 	}
-
-	// DFS
-	/*
-	Depth first search
-	Check 
-
-	*/
 }
 
