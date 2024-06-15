@@ -100,17 +100,11 @@ class AlgorithmsAssignment : Game
 		// DONE: Implement an OnGraphWayPointAgent class
 		// DONE: Implement HighLevelDungeonNodeGraph
 		//
-		// -----------------------------------------------------------------
-		//
 		// Assignment 2.2 Good (Optional) TiledView & RandomWayPointagent
-		//
-		// TODO: Implement TiledView
+		// DONE: Implement TiledView
 		// DONE: Implement a RandomWayPointAgent class
 		//
-		// -----------------------------------------------------------------
-		//
 		// Assignment 2.3 Excellent (Optional) LowLevelDungeonNodeGraph
-		//
 		// TODO: Implement LowLevelDungeonNodeGraph
 		//
 
@@ -120,7 +114,7 @@ class AlgorithmsAssignment : Game
 		_graph?.Generate();
 
 		//_tiledView = new SampleTiledView(_dungeon, TileType.GROUND);
-		//_tiledView = new TiledDungeonView(_dungeon, TileType.GROUND); 
+		_tiledView = new TiledDungeonView(_dungeon, TileType.VOID); 
 		_tiledView?.Generate();
 
 		//_agent = new SampleNodeGraphAgent(_graph);
@@ -131,22 +125,22 @@ class AlgorithmsAssignment : Game
 		// -----------------------------------------------------------------
 		// Assignment 3.1 Sufficient (Mandatory) - Recursive Pathfinding
 		//
-		// TODO: Implement a RecursivePathFinder
-		// TODO: Implement a BreadthFirstPathFinder
+		// DONE: Implement a RecursivePathFinder
+		// DONE: Implement a BreadthFirstPathFinder
 		//
-		// TODO: Implement a PathFindingAgent that uses one of your pathfinder implementations (should work with any pathfinder implementation)
+		// DONE: Implement a PathFindingAgent that uses one of your pathfinder implementations (should work with any pathfinder implementation)
 		// -----------------------------------------------------------------
 		// Assignment 3.2 Good & 3.3 Excellent (Optional)
 		//
-		// There are no more explicit TODO's to guide you through these last two parts.
+		// There are no more explicit TO-DO's to guide you through these last two parts.
 		// You are on your own. Good luck, make the best of it. Make sure your code is testable.
 		// For example for A*, you must choose a setup in which it is possible to demonstrate your 
 		// algorithm works. Find the best place to add your code, and don't forget to move the
 		// PathFindingAgent below the creation of your PathFinder!
 
 		//_pathFinder = new SamplePathFinder(_graph);
-		_pathFinder = new RecursivePathFinder(_graph);
-		//_pathFinder = new BreadthFirstPathFinder(_graph);
+		//_pathFinder = new RecursivePathFinder(_graph);
+		_pathFinder = new BreadthFirstPathFinder(_graph);
 
 		_agent = new PathFindingAgent(_graph, _pathFinder);
 

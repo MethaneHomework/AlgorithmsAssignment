@@ -2,9 +2,10 @@ using System;
 
 class Program
 {
-	public static void Main(String[] args)
+	public static void Main(string[] args)
 	{
-		AlgorithmsAssignment dcg = new AlgorithmsAssignment();
-		dcg.Start();
+		//AlgorithmsAssignment dcg = new AlgorithmsAssignment();
+		//dcg.Start();
+		new AlgorithmsAssignment().Start();
 	}
 }
