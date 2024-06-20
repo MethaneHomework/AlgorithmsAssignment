@@ -141,6 +141,7 @@ class AlgorithmsAssignment : Game
 		//_pathFinder = new SamplePathFinder(_graph);
 		//_pathFinder = new IncompleteRecursiveDFS(_graph);
 		_pathFinder = new BreadthFirstPathFinder(_graph);
+		//_pathFinder = new RecursiveDFS(_graph);
 
 		_agent = new PathFindingAgent(_graph, _pathFinder);
 

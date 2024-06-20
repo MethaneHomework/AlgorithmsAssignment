@@ -24,10 +24,10 @@ internal class LowLevelDungeonNodeGraph : SampleDungeonNodeGraph
 			PlaceDoorNode(door, nodesPosition);
 		}
 
-		Hashtable visitedNodes = new Hashtable();
+		HashSet<Node> visitedNodes = new HashSet<Node>();
 		Queue<Node> fillQueue = new Queue<Node>();
 		fillQueue.Enqueue(nodes[0]);
-		visitedNodes.Add(nodes[0], null);
+		visitedNodes.Add(nodes[0]);
 
 		while (fillQueue.Count > 0)
 		{
@@ -40,19 +40,24 @@ internal class LowLevelDungeonNodeGraph : SampleDungeonNodeGraph
 			CheckNode(node, nodesPosition, fillQueue, visitedNodes, -1,  0);	// left node
 			CheckNode(node, nodesPosition, fillQueue, visitedNodes,  0,  1);	// right node
 			CheckNode(node, nodesPosition, fillQueue, visitedNodes,  1,  0);	// bottom node
+
+			CheckNode(node, nodesPosition, fillQueue, visitedNodes, -1, -1);	// top node
+			CheckNode(node, nodesPosition, fillQueue, visitedNodes, -1,  1);	// left node
+			CheckNode(node, nodesPosition, fillQueue, visitedNodes,  1,  1);	// right node
+			CheckNode(node, nodesPosition, fillQueue, visitedNodes,  1, -1);	// bottom node
 		}
 	}
 
-	private void CheckNode(Node node, Node[,] nodePositionArray, Queue<Node> queue, Hashtable visited, int dX, int dY)
+	private void CheckNode(Node node, Node[,] nodePositionArray, Queue<Node> queue, HashSet<Node> visited, int dX, int dY)
 	{
 		Point nodePoint = getDungeonPoint(node.location);
 		Node otherNode = nodePositionArray[nodePoint.X + dX, nodePoint.Y + dY];
 		if (otherNode == null) return;
 
 		AddConnection(node, otherNode);
-		if (!visited.ContainsKey(otherNode))
+		if (!visited.Contains(otherNode))
 		{
-			visited.Add(otherNode, null);
+			visited.Add(otherNode);
 			queue.Enqueue(otherNode);
 		}
 	}
