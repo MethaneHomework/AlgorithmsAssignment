@@ -21,6 +21,16 @@ class Room
 		doors = new List<Door>();
 	}
 
+	public Rectangle internalArea
+	{
+		get
+		{
+			Rectangle internals = area;
+			internals.Inflate(-1, -1);
+			return internals;
+		}
+	}
+
 	//Return information about the type of object and it's data
 	//eg Room: (x, y, width, height)
 	public override string ToString()

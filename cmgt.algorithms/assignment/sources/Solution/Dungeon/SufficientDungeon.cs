@@ -29,7 +29,10 @@ internal class SufficientDungeon : Dungeon
 
 		foreach (BSPNode node in RootNode.LeafNodes)
 		{
-			Room room = new Room( new Rectangle(node.Bounds.X - 1, node.Bounds.Y - 1, node.Bounds.Width + 2, node.Bounds.Height + 2) );
+			//Room room = new Room(new Rectangle(node.Bounds.X - 1, node.Bounds.Y - 1, node.Bounds.Width + 2, node.Bounds.Height + 2));
+			Rectangle roomArea = node.Bounds;
+			roomArea.Inflate(1, 1);
+			Room room = new Room(roomArea);
 			rooms.Add(room);
 			node.Room = room;
 		}

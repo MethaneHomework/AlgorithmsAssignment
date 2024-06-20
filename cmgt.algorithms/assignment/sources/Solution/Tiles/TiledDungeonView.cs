@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-internal class TiledDungeonView : TiledView
+﻿internal class TiledDungeonView : TiledView
 {
 	Dungeon _dungeon;
 	TileType _defaultTile;

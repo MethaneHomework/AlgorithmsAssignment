@@ -30,7 +30,7 @@ class AlgorithmsAssignment : Game
 	PathFinder _pathFinder = null;
 
 	//common settings
-	private const int SCALE = 16;               // Done: experiment with changing this
+	private const int SCALE = 25;               // Done: experiment with changing this
 	private const int MIN_ROOM_SIZE = 7;        // Done: use this setting in your dungeon generator
 
 	public AlgorithmsAssignment() : base(1200, 800, false, true, -1, -1, false)
@@ -109,12 +109,12 @@ class AlgorithmsAssignment : Game
 		//
 
 		//_graph = new SampleDungeonNodeGraph(_dungeon);
-		_graph = new HighLevelDungeonNodeGraph(_dungeon);
-		//_graph = new LowLevelDungeonNodeGraph(_dungeon);
+		//_graph = new HighLevelDungeonNodeGraph(_dungeon);
+		_graph = new LowLevelDungeonNodeGraph(_dungeon);
 		_graph?.Generate();
 
 		//_tiledView = new SampleTiledView(_dungeon, TileType.GROUND);
-		_tiledView = new TiledDungeonView(_dungeon, TileType.VOID); 
+		_tiledView = new TiledDungeonView(_dungeon, TileType.VOID);
 		_tiledView?.Generate();
 
 		//_agent = new SampleNodeGraphAgent(_graph);
@@ -139,7 +139,7 @@ class AlgorithmsAssignment : Game
 		// PathFindingAgent below the creation of your PathFinder!
 
 		//_pathFinder = new SamplePathFinder(_graph);
-		//_pathFinder = new RecursivePathFinder(_graph);
+		//_pathFinder = new IncompleteRecursiveDFS(_graph);
 		_pathFinder = new BreadthFirstPathFinder(_graph);
 
 		_agent = new PathFindingAgent(_graph, _pathFinder);

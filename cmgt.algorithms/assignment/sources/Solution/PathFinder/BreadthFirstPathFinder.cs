@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 internal class BreadthFirstPathFinder : PathFinder
 {
@@ -17,7 +12,7 @@ internal class BreadthFirstPathFinder : PathFinder
 		// Empty collections
 		_explored.Clear();
 		_queue.Clear();
-		
+
 		// mark pFrom as explored with no previous node since it's the start of the path.
 		_queue.Enqueue(pFrom);
 		_explored.Add(pFrom, null);
@@ -40,7 +35,7 @@ internal class BreadthFirstPathFinder : PathFinder
 			{
 				List<Node> path = new List<Node>();
 				Node current = node;
-				
+
 				// If current is pFrom then the path is complete.
 				while (current != null)
 				{

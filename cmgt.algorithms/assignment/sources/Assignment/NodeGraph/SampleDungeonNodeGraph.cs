@@ -69,5 +69,12 @@ class SampleDungeonNodeGraph : NodeGraph
 		float centerY = (pLocation.Y + 0.5f) * _dungeon.scale;
 		return new Point((int)centerX, (int)centerY);
 	}
+	protected Point getDungeonPoint(Point pLocation)
+	{
+		float x = pLocation.X / _dungeon.scale;
+		float y = pLocation.Y / _dungeon.scale;
+
+		return new Point((int)x, (int)y);
+	}
 
 }

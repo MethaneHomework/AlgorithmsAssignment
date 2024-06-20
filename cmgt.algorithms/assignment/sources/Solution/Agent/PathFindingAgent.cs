@@ -1,9 +1,6 @@
 ﻿using GXPEngine;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 internal class PathFindingAgent : NodeGraphAgent
@@ -49,7 +46,7 @@ internal class PathFindingAgent : NodeGraphAgent
 			if (Wandering) Console.WriteLine("Agent is now wandering.");
 			else Console.WriteLine("Agent stopped wandering.");
 		}
-		
+
 		if (_path.Count == 0)
 		{
 			if (Wandering)

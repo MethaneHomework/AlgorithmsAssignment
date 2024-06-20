@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-internal class RecursivePathFinder : PathFinder
+internal class IncompleteRecursiveDFS : PathFinder
 {
 	int nodesChecked;
 
-	public RecursivePathFinder(NodeGraph pGraph) : base(pGraph)
+	public IncompleteRecursiveDFS(NodeGraph pGraph) : base(pGraph)
 	{
 
 	}
@@ -41,9 +36,8 @@ internal class RecursivePathFinder : PathFinder
 
 			if (path.Count > 0)
 			{
-				List<Node> finalPath = new List<Node>() { current };
-				//finalPath.AddRange(path);
-				return path.Prepend(current).ToList();
+				path.Insert(0, current);
+				return path;
 			}
 		}
 
