@@ -33,7 +33,7 @@ internal class LowLevelDungeonNodeGraph : SampleDungeonNodeGraph
 		{
 			Node node = fillQueue.Dequeue();
 
-			Point nodePoint = getDungeonPoint(node.location);
+			Point nodePoint = GetDungeonPoint(node.location);
 			Debug.Assert(node == nodesPosition[nodePoint.X, nodePoint.Y]);
 
 			CheckNode(node, nodesPosition, fillQueue, visitedNodes,  0, -1);	// top node
@@ -50,7 +50,7 @@ internal class LowLevelDungeonNodeGraph : SampleDungeonNodeGraph
 
 	private void CheckNode(Node node, Node[,] nodePositionArray, Queue<Node> queue, HashSet<Node> visited, int dX, int dY)
 	{
-		Point nodePoint = getDungeonPoint(node.location);
+		Point nodePoint = GetDungeonPoint(node.location);
 		Node otherNode = nodePositionArray[nodePoint.X + dX, nodePoint.Y + dY];
 		if (otherNode == null) return;
 

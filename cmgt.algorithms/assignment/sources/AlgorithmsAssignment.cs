@@ -140,8 +140,15 @@ class AlgorithmsAssignment : Game
 
 		//_pathFinder = new SamplePathFinder(_graph);
 		//_pathFinder = new IncompleteRecursiveDFS(_graph);
-		_pathFinder = new BreadthFirstPathFinder(_graph);
+		//_pathFinder = new BreadthFirstPathFinder(_graph);
 		//_pathFinder = new RecursiveDFS(_graph);
+		_pathFinder = new AStarStepped(_graph as SampleDungeonNodeGraph);
+		if (_pathFinder is AStarStepped aStar)
+		{
+			//
+			//aStar.Heuristic = (a, b) => { return 0; };
+			aStar.Heuristic = aStar.OctileDistance;
+		}
 
 		_agent = new PathFindingAgent(_graph, _pathFinder);
 

@@ -13,7 +13,7 @@ internal class BreadthFirstPathFinder : PathFinder
 		_explored.Clear();
 		_queue.Clear();
 
-		// mark pFrom as explored with no previous node since it's the start of the path.
+		// Mark pFrom as explored with no previous node since it's the start of the path.
 		_queue.Enqueue(pFrom);
 		_explored.Add(pFrom, null);
 
@@ -47,6 +47,7 @@ internal class BreadthFirstPathFinder : PathFinder
 				return path;
 			}
 		}
+
 		// No path found
 		return new List<Node>();
 	}
