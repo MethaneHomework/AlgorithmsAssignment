@@ -16,16 +16,16 @@ internal class SufficientDungeon : Dungeon
 	{
 		RootNode = new BSPNode(new Rectangle(1, 1, size.Width - 2, size.Height - 2));
 
-		GenerateRooms(pMinimumRoomSize);
+		GenerateRooms(pMinimumRoomSize, 6);
 		GenerateDoors();
 
 		foreach (Room room in rooms) Console.WriteLine(room.ToString());
 		foreach (Door door in doors) Console.WriteLine(door.ToString());
 	}
 
-	protected virtual void GenerateRooms(int pMinimumRoomSize)
+	protected virtual void GenerateRooms(int pMinimumRoomSize, int depth = 3)
 	{
-		RootNode.SplitRecursive(3, pMinimumRoomSize, rng);
+		RootNode.SplitRecursive(depth, pMinimumRoomSize, rng);
 
 		foreach (BSPNode node in RootNode.LeafNodes)
 		{

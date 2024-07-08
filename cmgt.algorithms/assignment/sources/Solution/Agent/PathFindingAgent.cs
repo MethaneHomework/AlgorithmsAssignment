@@ -1,6 +1,7 @@
 ﻿using GXPEngine;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 
 internal class PathFindingAgent : NodeGraphAgent
@@ -19,6 +20,15 @@ internal class PathFindingAgent : NodeGraphAgent
 		_pathFinder = pPathFinder;
 		_graph = pNodeGraph;
 
+		if (pPathFinder is SteppedPathFinder sPathFinder)
+		{
+			sPathFinder.FoundPath += (sender, path) =>
+			{
+				path.ForEach(node => _path.Enqueue(node));
+				_last = _target;
+			};
+		}
+
 		pNodeGraph.OnNodeShiftLeftClicked += node =>
 		{
 			SafeJump(node);
@@ -26,6 +36,7 @@ internal class PathFindingAgent : NodeGraphAgent
 		pNodeGraph.OnNodeShiftRightClicked += node =>
 		{
 			_target = node;
+			if (_pathFinder is SteppedPathFinder steppedPath) steppedPath.Cancel();
 		};
 	}
 
@@ -33,11 +44,19 @@ internal class PathFindingAgent : NodeGraphAgent
 	{
 		if (Input.GetKeyDown(Key.G) && _target != null)
 		{
-			List<Node> pathOrEmpty = _pathFinder.Generate(_last, _target);
-			if (pathOrEmpty != null && pathOrEmpty.Count > 0)
+			if (_pathFinder is SteppedPathFinder steppedPath && steppedPath.IsSearching)
 			{
-				_last = _target;
-				pathOrEmpty.ForEach(x => _path.Enqueue(x));
+				//steppedPath.Step();
+			}
+			else
+			{
+				List<Node> pathOrEmpty = _pathFinder.Generate(_last, _target);
+				
+				if (pathOrEmpty != null && pathOrEmpty.Count > 0)
+				{
+					_last = _target;
+					pathOrEmpty.ForEach(x => _path.Enqueue(x));
+				}
 			}
 		}
 		if (Input.GetKeyDown(Key.W))
@@ -51,14 +70,24 @@ internal class PathFindingAgent : NodeGraphAgent
 		{
 			if (Wandering)
 			{
-				_target = _graph.nodes[Utils.Random(0, _graph.nodes.Count)];
-				List<Node> pathOrEmpty = _pathFinder.Generate(_last, _target);
-				if (pathOrEmpty != null && pathOrEmpty.Count > 0)
+				if (_pathFinder is SteppedPathFinder steppedPath && steppedPath.IsSearching)
 				{
-					_last = _target;
-					pathOrEmpty.ForEach(x => _path.Enqueue(x));
+					// TODO: Move to stepped pathfinder class since this does not really relate to the agent
+					steppedPath.Step();
+					if (Input.GetKey(Key.SPACE)) Thread.Sleep(50);
+				}
+				else
+				{
+					_target = _graph.nodes[Utils.Random(0, _graph.nodes.Count)];
+					List<Node> pathOrEmpty = _pathFinder.Generate(_last, _target);
+					if (pathOrEmpty != null && pathOrEmpty.Count > 0)
+					{
+						_last = _target;
+						pathOrEmpty.ForEach(x => _path.Enqueue(x));
+					}
 				}
 			}
+
 			return;
 		}
 
