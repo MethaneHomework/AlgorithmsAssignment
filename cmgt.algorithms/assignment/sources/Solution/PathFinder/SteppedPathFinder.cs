@@ -16,6 +16,14 @@ internal abstract class SteppedPathFinder : PathFinder
 
 	public SteppedPathFinder(NodeGraph pGraph) : base(pGraph)
 	{
+		pGraph.OnNodeShiftLeftClicked += (n) =>
+		{
+			Cancel();
+		};
+		pGraph.OnNodeShiftRightClicked += (n) =>
+		{
+			Cancel();
+		};
 	}
 
 	protected override List<Node> generate(Node pFrom, Node pTo)
@@ -58,7 +66,7 @@ internal abstract class SteppedPathFinder : PathFinder
 		}
 		if (Input.GetKeyDown(Key.G))
 		{
-			if (!IsSearching) Generate(_startNode, _endNode);
+			if (!IsSearching && _startNode != null && _endNode != null) Generate(_startNode, _endNode);
 			else Step();
 		}
 	}

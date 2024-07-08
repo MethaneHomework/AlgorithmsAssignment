@@ -3,6 +3,7 @@ using GXPEngine.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 
 /**
  * This is the main 'game' for the Algorithms Assignment that accompanies the Algorithms course.
@@ -30,7 +31,7 @@ class AlgorithmsAssignment : Game
 	PathFinder _pathFinder = null;
 
 	//common settings
-	private const int SCALE = 25;               // Done: experiment with changing this
+	private const int SCALE = 16;               // Done: experiment with changing this
 	private const int MIN_ROOM_SIZE = 7;        // Done: use this setting in your dungeon generator
 
 	public AlgorithmsAssignment() : base(1200, 800, false, true, -1, -1, false)
@@ -147,7 +148,7 @@ class AlgorithmsAssignment : Game
 		{
 			//
 			//aStar.Heuristic = (a, b) => { return 0; };
-			aStar.Heuristic = aStar.OctileDistance;
+			aStar.Heuristic = aStar.EuclideanDistance;
 		}
 
 		_agent = new PathFindingAgent(_graph, _pathFinder);
@@ -170,6 +171,13 @@ class AlgorithmsAssignment : Game
 			ClearChildren();
 			Console.Clear();
 			InitializeDungeon();
+		}
+		if (Input.GetKeyDown(Key.PLUS))
+		{
+			TextWriter tw = File.CreateText("dungeon.txt");
+			Console.WriteLine(Path.GetFullPath("dungeon.txt"));
+			tw.Write(_dungeon.ToString());
+			tw.Close();
 		}
 	}
 

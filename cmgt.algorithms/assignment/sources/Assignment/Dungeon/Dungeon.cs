@@ -1,7 +1,9 @@
 ﻿using GXPEngine;
 using GXPEngine.OpenGL;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Text;
 
 // The base Dungeon class. 
 // 
@@ -123,6 +125,39 @@ abstract class Dungeon : Canvas
 	// TODO: Implement a toString/print method for debugging
 	public override string ToString()
 	{
-		return "Dungeon: implement/override this method to print info about all rooms and doors";
+		char[,] tiles = new char[size.Width, size.Height];
+		for (int y = 0; y < size.Height; y++)
+		{
+			for (int x = 0; x < size.Width; x++)
+			{
+				tiles[x, y] = Convert.ToChar(0x2589);
+			}
+		}
+
+		foreach (Room room in rooms)
+		{
+			Rectangle fill = room.internalArea;
+			for (int y = fill.Y; y < fill.Bottom; y++)
+			{
+				for (int x = fill.X; x < fill.Right; x++)
+				{
+					tiles[x, y] = ' ';
+				}
+			}
+		}
+		foreach (Door door in doors) tiles[door.location.X, door.location.Y] = ' ';
+
+		StringBuilder sb = new StringBuilder();
+		for (int y = 0; y < size.Height; y++)
+		{
+			for (int x = 0; x < size.Width; x++)
+			{
+				sb.Append(tiles[x, y]);
+				sb.Append(tiles[x, y]);
+			}
+			sb.Append('\n');
+		}
+		
+		return sb.ToString();
 	}
 }

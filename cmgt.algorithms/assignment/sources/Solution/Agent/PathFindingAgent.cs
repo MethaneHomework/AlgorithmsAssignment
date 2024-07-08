@@ -72,6 +72,7 @@ internal class PathFindingAgent : NodeGraphAgent
 			{
 				if (_pathFinder is SteppedPathFinder steppedPath && steppedPath.IsSearching)
 				{
+					// TODO: Move to stepped pathfinder class since this does not really relate to the agent
 					steppedPath.Step();
 					if (Input.GetKey(Key.SPACE)) Thread.Sleep(50);
 				}
@@ -86,6 +87,7 @@ internal class PathFindingAgent : NodeGraphAgent
 					}
 				}
 			}
+
 			return;
 		}
 

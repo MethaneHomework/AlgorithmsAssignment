@@ -1,6 +1,7 @@
 ﻿using GXPEngine;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using static GXPEngine.Mathf;
 
@@ -28,6 +29,8 @@ internal class AStarStepped : SteppedPathFinder
 		gScore = new Dictionary<Node, float>();
 		fScore = new Dictionary<Node, float>();
 		frontier = new List<Node>();
+
+
 	}
 
 	new void Update()
@@ -57,14 +60,19 @@ internal class AStarStepped : SteppedPathFinder
 			float heuristicScore = Heuristic(_startNode, _endNode);
 			fScore.Add(_startNode, heuristicScore);
 			frontier.Add(_startNode);
+
+			current = _startNode;
 		}
 		else
 		{
+			// Draw recently added nodes.
+			// Note: This causes the purple color to be overwritten after only one frame.
 			drawNodes(expanded, Brushes.SlateGray);
 			expanded.Clear();
 
-			if (current != null) drawNode(current, Brushes.DarkSlateGray);
+			drawNode(current, Brushes.DarkSlateGray);
 
+			// Find the node with the lowest score
 			float lowestScore = float.PositiveInfinity;
 			foreach (Node node in frontier)
 			{
@@ -74,15 +82,13 @@ internal class AStarStepped : SteppedPathFinder
 					lowestScore = score;
 					current = node;
 				}
-				//else if (score == lowestScore && Heuristic(node, _endNode) < Heuristic(current, _endNode))
-				//{
-				//	current = node;
-				//}
 			}
 			frontier.Remove(current);
 
+			// Draw active node
 			drawNode(current, Brushes.Turquoise);
 
+			// Found a path.
 			if (current == _endNode)
 			{
 				ConstructPath(current, explored);
@@ -110,7 +116,10 @@ internal class AStarStepped : SteppedPathFinder
 
 					gScore[neighbor] = gScoreTentative;
 					fScore[neighbor] = gScoreTentative + Heuristic(neighbor, _endNode);
+
 					if (!frontier.Contains(neighbor)) frontier.Add(neighbor);
+					
+					// Draw nodes where a better path was found.
 					drawNode(neighbor, Brushes.LimeGreen);
 				}
 				
@@ -138,18 +147,6 @@ internal class AStarStepped : SteppedPathFinder
 		_path.Reverse();
 	}
 
-	
-
-	protected void SortQueue()
-	{
-		frontier.Sort(new Comparison<Node>((a, b) =>
-		{
-			if (fScore[a] < fScore[b]) return -1;
-			else if (fScore[b] > fScore[a]) return 1;
-			else return 0;
-		}));
-	}
-
 	public float OctileDistance(Node from, Node to)
 	{
 		SampleDungeonNodeGraph sampleNodeGraph = _nodeGraph as SampleDungeonNodeGraph;
@@ -163,9 +160,11 @@ internal class AStarStepped : SteppedPathFinder
 		int shortest = Min(deltaX, deltaY);
 		int longest = Max(deltaX, deltaY);
 
-		const float sqrt2 = 1.4142f;
+		//const float sqrt2 = 1.4142f;
+		//return sqrt2 * shortest + (longest - shortest);
 
-		return sqrt2 * shortest + (longest - shortest);
+		const float sqrt2min1 = 0.4142f;
+		return sqrt2min1 * shortest + longest;
 	}
 	public float EuclideanDistance(Node from, Node to)
 	{
@@ -178,5 +177,14 @@ internal class AStarStepped : SteppedPathFinder
 		int deltaY = Abs(fromPoint.Y - toPoint.Y);
 
 		return Sqrt(deltaX * deltaX + deltaY * deltaY);
+	}
+	public float ManhattanDistance(Node from, Node to)
+	{
+		SampleDungeonNodeGraph sampleNodeGraph = _nodeGraph as SampleDungeonNodeGraph;
+
+		Point fromPoint = sampleNodeGraph.GetDungeonPoint(from.location);
+		Point toPoint = sampleNodeGraph.GetDungeonPoint(to.location);
+
+		return Abs(fromPoint.X - toPoint.X) + Abs(fromPoint.Y - toPoint.Y);
 	}
 }
