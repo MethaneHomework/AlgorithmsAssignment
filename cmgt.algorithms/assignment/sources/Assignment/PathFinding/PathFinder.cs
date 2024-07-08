@@ -7,8 +7,6 @@ using System.Drawing;
 // the requested path and then it will handle the visualization part for you. This class can be used in two ways:
 // 1. By setting the start and end node by left/right shift-clicking and then pressing G (for Generate)
 // 2. By calling Generate directly with the given start and end node
-// 
-// TODO: Create a subclass for this class and override the generate method (See SamplePathFinder for an example)
 abstract class PathFinder : Canvas
 {
 	protected Node _startNode;

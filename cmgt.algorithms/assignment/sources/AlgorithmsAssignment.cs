@@ -105,7 +105,7 @@ class AlgorithmsAssignment : Game
 		// DONE: Implement a RandomWayPointAgent class
 		//
 		// Assignment 2.3 Excellent (Optional) LowLevelDungeonNodeGraph
-		// TODO: Implement LowLevelDungeonNodeGraph
+		// Done: Implement LowLevelDungeonNodeGraph
 		//
 
 		//_graph = new SampleDungeonNodeGraph(_dungeon);
@@ -140,8 +140,9 @@ class AlgorithmsAssignment : Game
 
 		//_pathFinder = new SamplePathFinder(_graph);
 		//_pathFinder = new IncompleteRecursiveDFS(_graph);
-		_pathFinder = new BreadthFirstPathFinder(_graph);
+		//_pathFinder = new BreadthFirstPathFinder(_graph);
 		//_pathFinder = new RecursiveDFS(_graph);
+		_pathFinder = new AStarPathfinder(_graph);
 
 		_agent = new PathFindingAgent(_graph, _pathFinder);
 

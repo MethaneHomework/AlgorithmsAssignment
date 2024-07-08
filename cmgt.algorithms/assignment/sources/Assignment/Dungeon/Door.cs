@@ -25,7 +25,7 @@ class Door
 		unchecked { ID = lastID++; }
 	}
 
-	//TODO: Implement a toString method for debugging
+	//DONE: Implement a toString method for debugging
 	//Return information about the type of object and it's data
 	//eg Door: (x,y)
 	public override string ToString()

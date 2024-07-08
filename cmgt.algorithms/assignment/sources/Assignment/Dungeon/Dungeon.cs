@@ -9,8 +9,6 @@ using System.Drawing;
 //	- a(n empty) list of rooms
 //	- a(n empty) list of doors
 //	- code to visualize all rooms and doors.
-//	
-// TODO: Create a subclass of this class and override the generate method (see the SampleDungeon for an example).
 
 abstract class Dungeon : Canvas
 {
@@ -65,7 +63,7 @@ abstract class Dungeon : Canvas
 		if (autoDrawAfterGenerate) draw();
 	}
 
-	// TODO: Override this method in your subclass to generate a dungeon as described in assignment 1
+	// Override this method in your subclass to generate a dungeon as described in assignment 1
 	protected abstract void generate(int pMinimumRoomSize);
 
 
@@ -120,9 +118,9 @@ abstract class Dungeon : Canvas
 		graphics.DrawRectangle(pColor, pDoor.location.X, pDoor.location.Y, 0.5f, 0.5f);
 	}
 
-	// TODO: Implement a toString/print method for debugging
+	// DONE: Implement a toString/print method for debugging
 	public override string ToString()
 	{
-		return "Dungeon: implement/override this method to print info about all rooms and doors";
+		return $"Dungeon: {rooms.Count} rooms, {doors.Count} doors.";
 	}
 }

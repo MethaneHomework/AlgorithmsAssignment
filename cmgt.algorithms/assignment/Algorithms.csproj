@@ -153,6 +153,7 @@
     <Compile Include="sources\Solution\Dungeon\SufficientDungeon.cs" />
     <Compile Include="sources\Solution\NodeGraph\HighLevelDungeonNodeGraph.cs" />
     <Compile Include="sources\Solution\NodeGraph\LowLevelDungeonNodeGraph.cs" />
+    <Compile Include="sources\Solution\PathFinder\AStarPathfinder.cs" />
     <Compile Include="sources\Solution\PathFinder\BreadthFirstPathFinder.cs" />
     <Compile Include="sources\Solution\PathFinder\RecursiveDFS.cs" />
     <Compile Include="sources\Solution\PathFinder\IncompleteRecursiveDFS.cs" />
