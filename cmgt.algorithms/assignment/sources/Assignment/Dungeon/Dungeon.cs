@@ -155,7 +155,7 @@ abstract class Dungeon : Canvas
 			}
 			sb.Append('\n');
 		}
-		
+
 		return sb.ToString();
 	}
 }

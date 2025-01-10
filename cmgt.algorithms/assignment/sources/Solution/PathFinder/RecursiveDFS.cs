@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Random = System.Random;
 
 internal class RecursiveDFS : PathFinder
 {

@@ -51,7 +51,7 @@ internal class PathFindingAgent : NodeGraphAgent
 			else
 			{
 				List<Node> pathOrEmpty = _pathFinder.Generate(_last, _target);
-				
+
 				if (pathOrEmpty != null && pathOrEmpty.Count > 0)
 				{
 					_last = _target;

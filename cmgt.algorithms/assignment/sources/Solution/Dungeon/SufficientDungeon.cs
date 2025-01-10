@@ -19,8 +19,8 @@ internal class SufficientDungeon : Dungeon
 		GenerateRooms(pMinimumRoomSize, 6);
 		GenerateDoors();
 
-		foreach (Room room in rooms) Console.WriteLine(room.ToString());
-		foreach (Door door in doors) Console.WriteLine(door.ToString());
+		//foreach (Room room in rooms) Console.WriteLine(room.ToString());
+		//foreach (Door door in doors) Console.WriteLine(door.ToString());
 	}
 
 	protected virtual void GenerateRooms(int pMinimumRoomSize, int depth = 3)

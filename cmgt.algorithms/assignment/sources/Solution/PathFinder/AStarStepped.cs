@@ -1,7 +1,5 @@
 ﻿using GXPEngine;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using static GXPEngine.Mathf;
 
@@ -101,13 +99,13 @@ internal class AStarStepped : SteppedPathFinder
 				{
 					// Add the node since it has not been searched
 					explored.Add(neighbor, current);
-					
+
 					gScore.Add(neighbor, float.PositiveInfinity);
 					fScore.Add(neighbor, float.PositiveInfinity);
 					frontier.Add(neighbor);
 					expanded.Add(neighbor);
 				}
-				
+
 				// The node has been searched but is this a better path?
 				float gScoreTentative = gScore[current] + EuclideanDistance(current, neighbor);
 				if (gScoreTentative < gScore[neighbor])
@@ -118,11 +116,11 @@ internal class AStarStepped : SteppedPathFinder
 					fScore[neighbor] = gScoreTentative + Heuristic(neighbor, _endNode);
 
 					if (!frontier.Contains(neighbor)) frontier.Add(neighbor);
-					
+
 					// Draw nodes where a better path was found.
 					drawNode(neighbor, Brushes.LimeGreen);
 				}
-				
+
 			}
 
 			//SortQueue();

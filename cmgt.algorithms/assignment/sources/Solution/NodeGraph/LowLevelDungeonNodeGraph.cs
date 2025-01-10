@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 
@@ -14,7 +12,7 @@ internal class LowLevelDungeonNodeGraph : SampleDungeonNodeGraph
 	protected override void generate()
 	{
 		Node[,] nodesPosition = new Node[_dungeon.size.Width, _dungeon.size.Width];
-		
+
 		foreach (Room room in _dungeon.rooms)
 		{
 			PlaceRoomNodes(room, nodesPosition);
@@ -36,15 +34,15 @@ internal class LowLevelDungeonNodeGraph : SampleDungeonNodeGraph
 			Point nodePoint = GetDungeonPoint(node.location);
 			Debug.Assert(node == nodesPosition[nodePoint.X, nodePoint.Y]);
 
-			CheckNode(node, nodesPosition, fillQueue, visitedNodes,  0, -1);	// top node
-			CheckNode(node, nodesPosition, fillQueue, visitedNodes, -1,  0);	// left node
-			CheckNode(node, nodesPosition, fillQueue, visitedNodes,  0,  1);	// right node
-			CheckNode(node, nodesPosition, fillQueue, visitedNodes,  1,  0);	// bottom node
+			CheckNode(node, nodesPosition, fillQueue, visitedNodes, 0, -1); // top node
+			CheckNode(node, nodesPosition, fillQueue, visitedNodes, -1, 0); // left node
+			CheckNode(node, nodesPosition, fillQueue, visitedNodes, 0, 1);  // right node
+			CheckNode(node, nodesPosition, fillQueue, visitedNodes, 1, 0);  // bottom node
 
-			CheckNode(node, nodesPosition, fillQueue, visitedNodes, -1, -1);	// top node
-			CheckNode(node, nodesPosition, fillQueue, visitedNodes, -1,  1);	// left node
-			CheckNode(node, nodesPosition, fillQueue, visitedNodes,  1,  1);	// right node
-			CheckNode(node, nodesPosition, fillQueue, visitedNodes,  1, -1);	// bottom node
+			CheckNode(node, nodesPosition, fillQueue, visitedNodes, -1, -1);    // top node
+			CheckNode(node, nodesPosition, fillQueue, visitedNodes, -1, 1); // left node
+			CheckNode(node, nodesPosition, fillQueue, visitedNodes, 1, 1);  // right node
+			CheckNode(node, nodesPosition, fillQueue, visitedNodes, 1, -1); // bottom node
 		}
 	}
 

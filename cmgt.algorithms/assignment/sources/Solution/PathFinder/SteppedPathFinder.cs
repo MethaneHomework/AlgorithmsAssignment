@@ -2,9 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 internal abstract class SteppedPathFinder : PathFinder
 {
@@ -47,7 +44,7 @@ internal abstract class SteppedPathFinder : PathFinder
 				drawConnection(a, b);
 			}
 			//drawNodes(_path, Brushes.Yellow);
-			
+
 			FoundPath.Invoke(this, _path);
 			return true;
 		}
